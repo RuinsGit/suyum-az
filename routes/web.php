@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\HeaderController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\SubCategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,6 +50,15 @@ Route::prefix('admin')->group(function () {
             Route::delete('header/{id}', [HeaderController::class, 'destroy'])->name('header.destroy');
             Route::resource('category', CategoryController::class)->except(['show']);
             Route::resource('product', ProductController::class);
+            Route::post('/admin/product/delete-image/{product}/{type}', [ProductController::class, 'deleteImage'])
+                ->name('pages.product.delete-image');
+            Route::resource('subcategory', SubCategoryController::class)->except(['show']);
+            Route::patch('subcategory/{id}/toggle-status', [SubCategoryController::class, 'toggleStatus'])
+                ->name('subcategory.toggle-status');
+            Route::get('get-subcategories/{category}', [SubCategoryController::class, 'getSubCategories'])
+                ->name('subcategory.get-subcategories');
+            Route::patch('product/{id}/toggle-status', [ProductController::class, 'toggleStatus'])
+                ->name('product.toggle-status');
         });
     });
 });

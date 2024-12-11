@@ -25,9 +25,9 @@
                                 @csrf
 
                                 <div class="row">
-                                    <div class="col-md-12 mb-3">
+                                    <div class="col-md-6 mb-3">
                                         <label class="form-label">Kateqoriya</label>
-                                        <select name="category_id" class="form-select @error('category_id') is-invalid @enderror">
+                                        <select name="category_id" id="category_id" class="form-select @error('category_id') is-invalid @enderror">
                                             <option value="">Kateqoriya seçin</option>
                                             @foreach($categories as $category)
                                                 <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
@@ -36,6 +36,16 @@
                                             @endforeach
                                         </select>
                                         @error('category_id')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Alt Kateqoriya</label>
+                                        <select name="sub_category_id" id="sub_category_id" class="form-select @error('sub_category_id') is-invalid @enderror">
+                                            <option value="">Alt kateqoriya seçin</option>
+                                        </select>
+                                        @error('sub_category_id')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>
@@ -377,7 +387,7 @@ function toggleDetails(months) {
     
     detailRows.forEach(row => {
         row.style.display = isHidden ? 'table-row' : 'none';
-    });
+    });     
 }
 
 document.querySelector('input[name="price"]').addEventListener('input', calculateLoan);
@@ -387,5 +397,37 @@ document.querySelectorAll('input[name="installment_months[]"]').forEach(checkbox
 });
 
 document.addEventListener('DOMContentLoaded', calculateLoan);
+
+$(document).ready(function() {
+    // Kategori değiştiğinde alt kategorileri getir
+    $('#category_id').on('change', function() {
+        var categoryId = $(this).val();
+        var subCategorySelect = $('#sub_category_id');
+        
+        // Kategori seçili değilse alt kategorileri temizle
+        if (!categoryId) {
+            subCategorySelect.html('<option value="">Alt kateqoriya seçin</option>');
+            return;
+        }
+
+        // AJAX isteği ile alt kategorileri getir
+        $.ajax({
+            url: '/admin/pages/get-subcategories/' + categoryId,
+            type: 'GET',
+            success: function(response) {
+                console.log('Alt kategoriler:', response); // Debug için
+                var options = '<option value="">Alt kateqoriya seçin</option>';
+                response.forEach(function(subCategory) {
+                    options += `<option value="${subCategory.id}">${subCategory.name_az}</option>`;
+                });
+                subCategorySelect.html(options);
+            },
+            error: function(xhr) {
+                console.error('Alt kategoriler yüklenirken hata oluştu:', xhr);
+                toastr.error('Alt kategoriler yüklenirken hata oluştu');
+            }
+        });
+    });
+});
 </script>
 @endpush

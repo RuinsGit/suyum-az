@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\SubCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
@@ -184,8 +185,16 @@ class ProductController extends Controller
             'name_az' => 'required|string|max:255',
             'name_en' => 'required|string|max:255',
             'name_ru' => 'required|string|max:255',
+            'cartridge_az' => 'nullable|string|max:255',
+            'cartridge_en' => 'nullable|string|max:255',
+            'cartridge_ru' => 'nullable|string|max:255',
+            'pressure_range_az' => 'nullable|string|max:255',
+            'pressure_range_en' => 'nullable|string|max:255',
+            'pressure_range_ru' => 'nullable|string|max:255',
             'price' => 'required|numeric|min:0',
-            'monthly_percentage' => 'required|numeric|min:0|max:100',
+            'annual_percentage' => 'required|numeric|min:0|max:100',
+            'courier_price' => 'required_if:has_courier,1|nullable|numeric|min:0',
+            'installation_price' => 'required_if:has_installation,1|nullable|numeric|min:0',
             'main_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'courier_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'installation_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
@@ -193,45 +202,68 @@ class ProductController extends Controller
             'payment_image_2' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
         ]);
 
-        $product = Product::findOrFail($id);
-        $data = $request->all();
-        
-        // Boolean değerleri düzelt
-        $data['status'] = $request->has('status') ? 1 : 0;
-        $data['has_courier'] = $request->has('has_courier') ? 1 : 0;
-        $data['has_installation'] = $request->has('has_installation') ? 1 : 0;
+        try {
+            $product = Product::findOrFail($id);
+            $data = $request->except(['_token', '_method']);
+            
+            // Boolean değerleri düzelt
+            $data['status'] = $request->has('status') ? 1 : 0;
+            $data['has_courier'] = $request->has('has_courier') ? 1 : 0;
+            $data['has_installation'] = $request->has('has_installation') ? 1 : 0;
 
-        // Resim işlemleri
-        $imageFields = ['main_image', 'courier_image', 'installation_image', 'payment_image_1', 'payment_image_2'];
-        
-        foreach ($imageFields as $field) {
-            if ($request->hasFile($field)) {
-                // Eski resmi sil
-                if ($product->$field && File::exists(public_path($product->$field))) {
-                    File::delete(public_path($product->$field));
-                }
+            // Taksit aylarını string olarak kaydet
+            if ($request->has('installment_months')) {
+                $data['installment_months'] = implode(',', $request->installment_months);
+            } else {
+                $data['installment_months'] = null;
+            }
 
-                $file = $request->file($field);
-                $destinationPath = public_path('uploads/products');
-                $originalFileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-                $webpFileName = time() . '_' . $originalFileName . '_' . $field . '.webp';
+            // Resim işlemleri
+            $imageFields = ['main_image', 'courier_image', 'installation_image', 'payment_image_1', 'payment_image_2'];
+            
+            foreach ($imageFields as $field) {
+                if ($request->hasFile($field)) {
+                    // Eski resmi sil
+                    if ($product->$field && File::exists(public_path($product->$field))) {
+                        File::delete(public_path($product->$field));
+                    }
 
-                $imageResource = imagecreatefromstring(file_get_contents($file));
-                $webpPath = $destinationPath . '/' . $webpFileName;
+                    $file = $request->file($field);
+                    $destinationPath = public_path('uploads/products');
+                    
+                    if (!File::exists($destinationPath)) {
+                        File::makeDirectory($destinationPath, 0777, true);
+                    }
 
-                if ($imageResource) {
-                    imagewebp($imageResource, $webpPath, 80);
-                    imagedestroy($imageResource);
+                    $originalFileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+                    $webpFileName = time() . '_' . $originalFileName . '_' . $field . '.webp';
+                    $webpPath = $destinationPath . '/' . $webpFileName;
 
-                    $data[$field] = 'uploads/products/' . $webpFileName;
+                    $imageResource = imagecreatefromstring(file_get_contents($file));
+                    if ($imageResource) {
+                        imagewebp($imageResource, $webpPath, 80);
+                        imagedestroy($imageResource);
+                        $data[$field] = 'uploads/products/' . $webpFileName;
+                    }
                 }
             }
+
+            // Eğer courier veya installation seçili değilse, ilgili fiyatları null yap
+            if (!$data['has_courier']) {
+                $data['courier_price'] = null;
+                $data['courier_image'] = $product->courier_image; // Mevcut resmi koru
+            }
+            
+            if (!$data['has_installation']) {
+                $data['installation_price'] = null;
+                $data['installation_image'] = $product->installation_image; // Mevcut resmi koru
+            }
+
+            $product->update($data);
+            return redirect()->route('pages.product.index')->with('success', 'Məhsul uğurla yeniləndi.');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Xəta: ' . $e->getMessage())->withInput();
         }
-
-        $product->update($data);
-
-        return redirect()->route('pages.product.index')
-            ->with('success', 'Məhsul uğurla yeniləndi.');
     }
 
     public function destroy($id)
@@ -250,5 +282,32 @@ class ProductController extends Controller
 
         return redirect()->route('pages.product.index')
             ->with('success', 'Məhsul uğurla silindi.');
+    }
+
+    public function deleteImage(Product $product, $type)
+    {
+        $validTypes = ['main_image', 'courier_image', 'installation_image', 'payment_image_1', 'payment_image_2'];
+
+        if (!in_array($type, $validTypes)) {
+            return response()->json(['success' => false, 'message' => 'Geçersiz resim tipi'], 400);
+        }
+
+        if ($product->$type && File::exists(public_path($product->$type))) {
+            File::delete(public_path($product->$type));
+            $product->update([$type => null]);
+            return response()->json(['success' => true]);
+        }
+
+        return response()->json(['success' => false, 'message' => 'Resim bulunamadı'], 404);
+    }
+
+    public function toggleStatus($id)
+    {
+        $product = Product::findOrFail($id);
+        $product->status = !$product->status;
+        $product->save();
+
+        return redirect()->route('pages.product.index')
+            ->with('success', 'Məhsul statusu uğurla dəyişdirildi.');
     }
 } 

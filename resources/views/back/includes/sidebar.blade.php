@@ -56,10 +56,24 @@
                 </li>
 
                 <li>
-                    <a href="{{ route('pages.category.index') }}" class="waves-effect">
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="ri-list-check"></i>
                         <span>Kateqoriyalar</span>
                     </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li>
+                            <a href="{{ route('pages.category.index') }}">
+                                <i class="ri-folder-line"></i>
+                                <span>Əsas Kateqoriyalar</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('pages.subcategory.index') }}">
+                                <i class="ri-folder-add-line"></i>
+                                <span>Alt Kateqoriyalar</span>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
 
                 <li>

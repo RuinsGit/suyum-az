@@ -77,6 +77,13 @@
                 </li>
 
                 <li>
+                    <a href="{{ route('pages.about.index') }}" class="waves-effect">
+                        <i class="ri-information-line"></i>
+                        <span>Haqqımızda</span>
+                    </a>
+                </li>
+
+                <li>
                     <a href="{{ route('pages.product.index') }}" class="waves-effect">
                         <i class="ri-shopping-cart-2-line"></i>
                         <span>Məhsullar</span>

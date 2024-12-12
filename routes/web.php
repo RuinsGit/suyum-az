@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\HeaderController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\SubCategoryController;
+use App\Http\Controllers\Admin\AboutController;
 
 /*
 |--------------------------------------------------------------------------
@@ -59,6 +60,8 @@ Route::prefix('admin')->group(function () {
                 ->name('subcategory.get-subcategories');
             Route::patch('product/{id}/toggle-status', [ProductController::class, 'toggleStatus'])
                 ->name('product.toggle-status');
+            Route::get('about', [AboutController::class, 'index'])->name('about.index');
+            Route::put('about/update', [AboutController::class, 'update'])->name('about.update');
         });
     });
 });

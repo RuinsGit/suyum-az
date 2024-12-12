@@ -45,11 +45,16 @@
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class="mdi mdi-application-cog"></i>
-                        <span>Tənzimləmələr</span>
+                        <i class="ri-contacts-line"></i>
+                        <span>Əlaqə</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="#">Tərcümələr</a></li>
+                        <li>
+                            <a href="{{ route('pages.contact.index') }}">
+                                <i class="ri-contacts-line"></i>
+                                <span>Əlaqə Məlumatları</span>
+                            </a>
+                        </li>
                         <li><a href="#">Ümumi tənzimləmələr</a></li>
                         <li><a href="#">Haqqımızda</a></li>
                     </ul>
@@ -89,6 +94,15 @@
                         <span>Məhsullar</span>
                     </a>
                 </li>
+
+                <li>
+                    <a href="{{ route('pages.service.index') }}" class="waves-effect">
+                        <i class="ri-service-line"></i>
+                        <span>Xidmətlər</span>
+                    </a>
+                </li>
+
+                
             </ul>
         </div>
         <!-- Sidebar -->

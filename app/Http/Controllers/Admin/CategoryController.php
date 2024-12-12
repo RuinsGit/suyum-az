@@ -122,4 +122,16 @@ class CategoryController extends Controller
         return redirect()->route('pages.category.index')
             ->with('success', 'Kateqoriya uğurla silindi.');
     }
+
+    public function toggleStatus(Category $category)
+    {
+        try {
+            $category->status = !$category->status;
+            $category->save();
+            
+            return redirect()->back()->with('success', 'Status uğurla dəyişdirildi');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Xəta baş verdi');
+        }
+    }
 }

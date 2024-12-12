@@ -79,9 +79,12 @@
                                                     <td>{{ $category->name_az }}</td>
                                                     <td>{{ Str::limit($category->description_az, 50) }}</td>
                                                     <td>
-                                                        <span class="badge bg-{{ $category->status ? 'success' : 'danger' }}">
-                                                            {{ $category->status ? 'Aktiv' : 'Deaktiv' }}
-                                                        </span>
+                                                        <form action="{{ route('pages.category.toggle-status', $category->id) }}" method="POST" class="d-inline-block">
+                                                            @csrf
+                                                            <button type="submit" class="btn btn-sm btn-{{ $category->status ? 'success' : 'danger' }}">
+                                                                {{ $category->status ? 'Aktiv' : 'Deaktiv' }}
+                                                            </button>
+                                                        </form>
                                                     </td>
                                                     <td>
                                                         <a href="{{ route('pages.category.edit', $category->id) }}" class="btn btn-success">
@@ -130,9 +133,12 @@
                                                     <td>{{ $category->name_en }}</td>
                                                     <td>{{ Str::limit($category->description_en, 50) }}</td>
                                                     <td>
-                                                        <span class="badge bg-{{ $category->status ? 'success' : 'danger' }}">
-                                                            {{ $category->status ? 'Active' : 'Inactive' }}
-                                                        </span>
+                                                        <form action="{{ route('pages.category.toggle-status', $category->id) }}" method="POST" class="d-inline-block">
+                                                            @csrf
+                                                            <button type="submit" class="btn btn-sm btn-{{ $category->status ? 'success' : 'danger' }}">
+                                                                {{ $category->status ? 'Active' : 'Inactive' }}
+                                                            </button>
+                                                        </form>
                                                     </td>
                                                     <td>
                                                         <a href="{{ route('pages.category.edit', $category->id) }}" class="btn btn-success">
@@ -181,9 +187,12 @@
                                                     <td>{{ $category->name_ru }}</td>
                                                     <td>{{ Str::limit($category->description_ru, 50) }}</td>
                                                     <td>
-                                                        <span class="badge bg-{{ $category->status ? 'success' : 'danger' }}">
-                                                            {{ $category->status ? 'Активный' : 'Неактивный' }}
-                                                        </span>
+                                                        <form action="{{ route('pages.category.toggle-status', $category->id) }}" method="POST" class="d-inline-block">
+                                                            @csrf
+                                                            <button type="submit" class="btn btn-sm btn-{{ $category->status ? 'success' : 'danger' }}">
+                                                                {{ $category->status ? 'Активный' : 'Неактивный' }}
+                                                            </button>
+                                                        </form>
                                                     </td>
                                                     <td>
                                                         <a href="{{ route('pages.category.edit', $category->id) }}" class="btn btn-success">
@@ -230,6 +239,62 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     form.submit();
+                }
+            });
+        }
+
+        function toggleStatus(categoryId) {
+            Swal.fire({
+                title: 'Statusu dəyişmək istədiyinizdən əminsiniz?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Bəli',
+                cancelButtonText: 'Xeyr'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const formData = new FormData();
+                    formData.append('_token', '{{ csrf_token() }}');
+
+                    fetch(`/admin/category/toggle-status/${categoryId}`, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        },
+                        body: formData
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.success) {
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'success',
+                                title: data.message,
+                                showConfirmButton: false,
+                                timer: 1500
+                            }).then(() => {
+                                window.location.reload();
+                            });
+                        } else {
+                            throw new Error(data.message || 'Status dəyişdirilə bilmədi.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'error',
+                            title: error.message || 'Bir problem yaşandı.',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    });
                 }
             });
         }

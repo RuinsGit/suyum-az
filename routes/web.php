@@ -7,6 +7,8 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\Admin\AboutController;
+use App\Http\Controllers\Admin\ContactController;
+use App\Http\Controllers\Admin\ServiceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,18 +52,19 @@ Route::prefix('admin')->group(function () {
             Route::put('header/{id}', [HeaderController::class, 'update'])->name('header.update');
             Route::delete('header/{id}', [HeaderController::class, 'destroy'])->name('header.destroy');
             Route::resource('category', CategoryController::class)->except(['show']);
+            Route::post('category/{category}/toggle-status', [CategoryController::class, 'toggleStatus'])->name('category.toggle-status');
             Route::resource('product', ProductController::class);
-            Route::post('/admin/product/delete-image/{product}/{type}', [ProductController::class, 'deleteImage'])
-                ->name('pages.product.delete-image');
+            Route::post('product/delete-image/{product}/{type}', [ProductController::class, 'deleteImage'])->name('product.delete-image');
+            Route::patch('product/{id}/toggle-status', [ProductController::class, 'toggleStatus'])->name('product.toggle-status');
             Route::resource('subcategory', SubCategoryController::class)->except(['show']);
-            Route::patch('subcategory/{id}/toggle-status', [SubCategoryController::class, 'toggleStatus'])
-                ->name('subcategory.toggle-status');
-            Route::get('get-subcategories/{category}', [SubCategoryController::class, 'getSubCategories'])
-                ->name('subcategory.get-subcategories');
-            Route::patch('product/{id}/toggle-status', [ProductController::class, 'toggleStatus'])
-                ->name('product.toggle-status');
+            Route::patch('subcategory/{id}/toggle-status', [SubCategoryController::class, 'toggleStatus'])->name('subcategory.toggle-status');
+            Route::get('get-subcategories/{category}', [SubCategoryController::class, 'getSubCategories'])->name('subcategory.get-subcategories');
             Route::get('about', [AboutController::class, 'index'])->name('about.index');
             Route::put('about/update', [AboutController::class, 'update'])->name('about.update');
+            Route::resource('service', ServiceController::class)->except(['show']);
+            Route::post('service/{service}/toggle-status', [ServiceController::class, 'toggleStatus'])->name('service.toggle-status');
+            Route::get('contact', [ContactController::class, 'index'])->name('contact.index');
+            Route::put('contact/update', [ContactController::class, 'update'])->name('contact.update');
         });
     });
 });

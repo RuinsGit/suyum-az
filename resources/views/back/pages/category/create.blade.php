@@ -116,12 +116,12 @@
                                     @enderror
                                 </div>
 
-                                <div class="mb-3">
+                                <!-- <div class="mb-3">
                                     <div class="form-check form-switch">
                                         <input class="form-check-input" type="checkbox" id="status" name="status" checked>
                                         <label class="form-check-label" for="status">Status</label>
                                     </div>
-                                </div>
+                                </div> -->
 
                                 <div>
                                     <button class="btn btn-primary" type="submit">Təsdiqlə</button>

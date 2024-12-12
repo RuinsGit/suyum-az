@@ -10,15 +10,15 @@ return new class extends Migration
     {
         Schema::create('abouts', function (Blueprint $table) {
             $table->id();
-            $table->string('title_az')->default('');  // Default değer ekledik
-            $table->string('title_en')->default('');  // Default değer ekledik
-            $table->string('title_ru')->default('');  // Default değer ekledik
-            $table->text('description_az')->nullable();  // Nullable yaptık
-            $table->text('description_en')->nullable();  // Nullable yaptık
-            $table->text('description_ru')->nullable();  // Nullable yaptık
+            $table->string('title_az')->default('');
+            $table->string('title_en')->default('');
+            $table->string('title_ru')->default('');
+            $table->text('description_az')->nullable();
+            $table->text('description_en')->nullable();
+            $table->text('description_ru')->nullable();  
             $table->string('video')->nullable();
             $table->timestamps();
-        });
+        }); 
     }
 
     public function down()

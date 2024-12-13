@@ -17,6 +17,7 @@ return new class extends Migration
             $table->text('description_en');
             $table->text('description_ru');
             $table->string('image')->nullable();
+            $table->string('bottom_image')->nullable(); // Yeni alan eklendi
             $table->boolean('status')->default(1);
             $table->timestamps();
         });

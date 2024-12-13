@@ -55,8 +55,18 @@
                                 <span>Əlaqə Məlumatları</span>
                             </a>
                         </li>
-                        <li><a href="#">Ümumi tənzimləmələr</a></li>
-                        <li><a href="#">Haqqımızda</a></li>
+                        <li>
+    <a href="{{ route('pages.contact-form.index') }}" class="waves-effect">
+                                <i class="ri-message-2-line"></i>
+                                <span>Müraciətlər</span>
+                                @php
+                                    $unreadCount = \App\Models\ContactForm::where('status', 0)->count();
+                                @endphp
+                                @if($unreadCount > 0)
+            <span class="badge rounded-pill bg-danger float-end">{{ $unreadCount }}</span>
+        @endif
+                            </a>
+                        </li>
                     </ul>
                 </li>
 
@@ -94,6 +104,13 @@
                         <span>Məhsullar</span>
                     </a>
                 </li>
+
+                <li>
+        <a href="{{ route('pages.certificate.index') }}" class="waves-effect">
+        <i class="ri-award-line"></i>
+        <span>Sertifikatlar</span>
+    </a>
+        </li>
 
                 <li>
                     <a href="{{ route('pages.service.index') }}" class="waves-effect">

@@ -5,7 +5,6 @@
 @section('content')
     <div class="page-content">
         <div class="container-fluid">
-            <!-- start page title -->
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
@@ -22,7 +21,7 @@
             </div>
 
             <div class="row">
-                <div class="col-xl-12">
+                <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
                             <form action="{{ route('pages.service.update', $service->id) }}" method="POST" enctype="multipart/form-data">
@@ -30,20 +29,20 @@
                                 @method('PUT')
 
                                 <!-- Nav tabs -->
-                                <ul class="nav nav-pills nav-justified" role="tablist">
-                                    <li class="nav-item waves-effect waves-light">
+                                <ul class="nav nav-tabs nav-justified" role="tablist">
+                                    <li class="nav-item">
                                         <a class="nav-link active" data-bs-toggle="tab" href="#az" role="tab">
                                             <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
                                             <span class="d-none d-sm-block">AZ</span>
                                         </a>
                                     </li>
-                                    <li class="nav-item waves-effect waves-light">
+                                    <li class="nav-item">
                                         <a class="nav-link" data-bs-toggle="tab" href="#en" role="tab">
                                             <span class="d-block d-sm-none"><i class="far fa-user"></i></span>
                                             <span class="d-none d-sm-block">EN</span>
                                         </a>
                                     </li>
-                                    <li class="nav-item waves-effect waves-light">
+                                    <li class="nav-item">
                                         <a class="nav-link" data-bs-toggle="tab" href="#ru" role="tab">
                                             <span class="d-block d-sm-none"><i class="far fa-envelope"></i></span>
                                             <span class="d-none d-sm-block">RU</span>
@@ -59,14 +58,14 @@
                                             <label class="form-label">Başlıq (AZ)</label>
                                             <input type="text" name="title_az" class="form-control" value="{{ old('title_az', $service->title_az) }}">
                                             @error('title_az')
-                                                <div class="invalid-feedback" style="display: block">{{ $message }}</div>
+                                            <div class="text-danger">{{ $message }}</div>
                                             @enderror
                                         </div>
                                         <div class="mb-3">
                                             <label class="form-label">Mətn (AZ)</label>
                                             <textarea name="description_az" class="form-control summernote">{{ old('description_az', $service->description_az) }}</textarea>
                                             @error('description_az')
-                                                <div class="invalid-feedback" style="display: block">{{ $message }}</div>
+                                            <div class="text-danger">{{ $message }}</div>
                                             @enderror
                                         </div>
                                     </div>
@@ -77,14 +76,14 @@
                                             <label class="form-label">Title (EN)</label>
                                             <input type="text" name="title_en" class="form-control" value="{{ old('title_en', $service->title_en) }}">
                                             @error('title_en')
-                                                <div class="invalid-feedback" style="display: block">{{ $message }}</div>
+                                            <div class="text-danger">{{ $message }}</div>
                                             @enderror
                                         </div>
                                         <div class="mb-3">
                                             <label class="form-label">Description (EN)</label>
                                             <textarea name="description_en" class="form-control summernote">{{ old('description_en', $service->description_en) }}</textarea>
                                             @error('description_en')
-                                                <div class="invalid-feedback" style="display: block">{{ $message }}</div>
+                                            <div class="text-danger">{{ $message }}</div>
                                             @enderror
                                         </div>
                                     </div>
@@ -95,31 +94,42 @@
                                             <label class="form-label">Заголовок (RU)</label>
                                             <input type="text" name="title_ru" class="form-control" value="{{ old('title_ru', $service->title_ru) }}">
                                             @error('title_ru')
-                                                <div class="invalid-feedback" style="display: block">{{ $message }}</div>
+                                            <div class="text-danger">{{ $message }}</div>
                                             @enderror
                                         </div>
                                         <div class="mb-3">
                                             <label class="form-label">Текст (RU)</label>
                                             <textarea name="description_ru" class="form-control summernote">{{ old('description_ru', $service->description_ru) }}</textarea>
                                             @error('description_ru')
-                                                <div class="invalid-feedback" style="display: block">{{ $message }}</div>
+                                            <div class="text-danger">{{ $message }}</div>
                                             @enderror
                                         </div>
                                     </div>
                                 </div>
 
-                                <!-- Şəkil -->
                                 <div class="row mb-3">
                                     <div class="col-md-6">
-                                        <label class="form-label">Şəkil</label>
+                                        <label class="form-label">Üst Şəkil</label>
                                         @if($service->image)
                                             <div class="mb-2">
-                                                <img src="{{ asset($service->image) }}" alt="Current Image" class="img-thumbnail" style="max-height: 100px">
+                                                <img src="{{ asset($service->image) }}" alt="Current Image" class="img-thumbnail" style="max-height: 150px">
                                             </div>
                                         @endif
-                                        <input type="file" name="image" class="form-control @error('image') is-invalid @enderror">
+                                        <input type="file" name="image" class="form-control">
                                         @error('image')
-                                        <div class="invalid-feedback">{{ $message }}</div>
+                                        <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Alt Şəkil</label>
+                                        @if($service->bottom_image)
+                                            <div class="mb-2">
+                                                <img src="{{ asset($service->bottom_image) }}" alt="Current Bottom Image" class="img-thumbnail" style="max-height: 150px">
+                                            </div>
+                                        @endif
+                                        <input type="file" name="bottom_image" class="form-control">
+                                        @error('bottom_image')
+                                        <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>

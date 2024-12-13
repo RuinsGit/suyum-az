@@ -11,7 +11,7 @@ class ServiceController extends Controller
 {
     public function index()
     {
-        $services = Service::paginate(10);
+        $services = Service::latest()->paginate(10);
         return view('back.pages.service.index', compact('services'));
     }
 
@@ -23,28 +23,56 @@ class ServiceController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title_az' => 'required|string|max:255',
-            'title_en' => 'required|string|max:255',
-            'title_ru' => 'required|string|max:255',
+            'title_az' => 'required',
+            'title_en' => 'required',
+            'title_ru' => 'required',
             'description_az' => 'required',
             'description_en' => 'required',
             'description_ru' => 'required',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048'
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'bottom_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048'
         ]);
 
         $data = $request->all();
-        $data['status'] = 1;
 
-        $data['description_az'] = $request->description_az;
-        $data['description_en'] = $request->description_en;
-        $data['description_ru'] = $request->description_ru;
-
+        // Ana resim işleme
         if ($request->hasFile('image')) {
             $file = $request->file('image');
             $destinationPath = public_path('uploads/services');
-            $fileName = time() . '_' . $file->getClientOriginalName();
-            $file->move($destinationPath, $fileName);
-            $data['image'] = 'uploads/services/' . $fileName;
+            $originalFileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+            $webpFileName = time() . '_' . $originalFileName . '.webp';
+
+            $imageResource = imagecreatefromstring(file_get_contents($file));
+            $webpPath = $destinationPath . '/' . $webpFileName;
+
+            if ($imageResource) {
+                if (!file_exists($destinationPath)) {
+                    mkdir($destinationPath, 0777, true);
+                }
+                imagewebp($imageResource, $webpPath, 80);
+                imagedestroy($imageResource);
+                $data['image'] = 'uploads/services/' . $webpFileName;
+            }
+        }
+
+        // Alt resim işleme
+        if ($request->hasFile('bottom_image')) {
+            $file = $request->file('bottom_image');
+            $destinationPath = public_path('uploads/services');
+            $originalFileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+            $webpFileName = time() . '_bottom_' . $originalFileName . '.webp';
+
+            $imageResource = imagecreatefromstring(file_get_contents($file));
+            $webpPath = $destinationPath . '/' . $webpFileName;
+
+            if ($imageResource) {
+                if (!file_exists($destinationPath)) {
+                    mkdir($destinationPath, 0777, true);
+                }
+                imagewebp($imageResource, $webpPath, 80);
+                imagedestroy($imageResource);
+                $data['bottom_image'] = 'uploads/services/' . $webpFileName;
+            }
         }
 
         Service::create($data);
@@ -61,22 +89,19 @@ class ServiceController extends Controller
     public function update(Request $request, Service $service)
     {
         $request->validate([
-            'title_az' => 'required|string|max:255',
-            'title_en' => 'required|string|max:255',
-            'title_ru' => 'required|string|max:255',
+            'title_az' => 'required',
+            'title_en' => 'required',
+            'title_ru' => 'required',
             'description_az' => 'required',
             'description_en' => 'required',
             'description_ru' => 'required',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048'
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'bottom_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048'
         ]);
 
         $data = $request->all();
-        $data['status'] = 1;
 
-        $data['description_az'] = $request->description_az;
-        $data['description_en'] = $request->description_en;
-        $data['description_ru'] = $request->description_ru;
-
+        // Ana resim işleme
         if ($request->hasFile('image')) {
             if ($service->image && File::exists(public_path($service->image))) {
                 File::delete(public_path($service->image));
@@ -84,9 +109,44 @@ class ServiceController extends Controller
 
             $file = $request->file('image');
             $destinationPath = public_path('uploads/services');
-            $fileName = time() . '_' . $file->getClientOriginalName();
-            $file->move($destinationPath, $fileName);
-            $data['image'] = 'uploads/services/' . $fileName;
+            $originalFileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+            $webpFileName = time() . '_' . $originalFileName . '.webp';
+
+            $imageResource = imagecreatefromstring(file_get_contents($file));
+            $webpPath = $destinationPath . '/' . $webpFileName;
+
+            if ($imageResource) {
+                if (!file_exists($destinationPath)) {
+                    mkdir($destinationPath, 0777, true);
+                }
+                imagewebp($imageResource, $webpPath, 80);
+                imagedestroy($imageResource);
+                $data['image'] = 'uploads/services/' . $webpFileName;
+            }
+        }
+
+        // Alt resim işleme
+        if ($request->hasFile('bottom_image')) {
+            if ($service->bottom_image && File::exists(public_path($service->bottom_image))) {
+                File::delete(public_path($service->bottom_image));
+            }
+
+            $file = $request->file('bottom_image');
+            $destinationPath = public_path('uploads/services');
+            $originalFileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+            $webpFileName = time() . '_bottom_' . $originalFileName . '.webp';
+
+            $imageResource = imagecreatefromstring(file_get_contents($file));
+            $webpPath = $destinationPath . '/' . $webpFileName;
+
+            if ($imageResource) {
+                if (!file_exists($destinationPath)) {
+                    mkdir($destinationPath, 0777, true);
+                }
+                imagewebp($imageResource, $webpPath, 80);
+                imagedestroy($imageResource);
+                $data['bottom_image'] = 'uploads/services/' . $webpFileName;
+            }
         }
 
         $service->update($data);
@@ -99,6 +159,9 @@ class ServiceController extends Controller
     {
         if ($service->image && File::exists(public_path($service->image))) {
             File::delete(public_path($service->image));
+        }
+        if ($service->bottom_image && File::exists(public_path($service->bottom_image))) {
+            File::delete(public_path($service->bottom_image));
         }
 
         $service->delete();

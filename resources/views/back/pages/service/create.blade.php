@@ -5,7 +5,6 @@
 @section('content')
     <div class="page-content">
         <div class="container-fluid">
-            <!-- start page title -->
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
@@ -14,7 +13,7 @@
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Ana səhifə</a></li>
                                 <li class="breadcrumb-item"><a href="{{ route('pages.service.index') }}">Xidmətlər</a></li>
-                                <li class="breadcrumb-item active">Yeni Xidmət</li>
+                                <li class="breadcrumb-item active">Yeni</li>
                             </ol>
                         </div>
                     </div>
@@ -107,16 +106,21 @@
                                     </div>
                                 </div>
 
-                                <!-- Şəkil və Status -->
                                 <div class="row mb-3">
                                     <div class="col-md-6">
-                                        <label class="form-label">Şəkil</label>
+                                        <label class="form-label">Üst Şəkil</label>
                                         <input type="file" name="image" class="form-control @error('image') is-invalid @enderror">
                                         @error('image')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>
-                                    
+                                    <div class="col-md-6">
+                                        <label class="form-label">Alt Şəkil</label>
+                                        <input type="file" name="bottom_image" class="form-control @error('bottom_image') is-invalid @enderror">
+                                        @error('bottom_image')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
                                 </div>
 
                                 <div class="row">
@@ -143,8 +147,21 @@
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 <script>
     $(document).ready(function() {
-        $(".summernote").summernote();
-        $('.dropdown-toggle').dropdown();
+        $(".summernote").summernote({
+            height: 300,                 // set editor height
+            minHeight: null,             // set minimum height of editor
+            maxHeight: null,             // set maximum height of editor
+            focus: true,                 // set focus to editable area after initializing summernote
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'underline', 'clear']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['table', ['table']],
+                ['insert', ['link', 'picture', 'video']],
+                ['view', ['fullscreen', 'codeview', 'help']]
+            ]
+        });
     });
 </script>
 @endpush

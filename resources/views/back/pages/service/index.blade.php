@@ -63,6 +63,7 @@
                                                 <tr>
                                                     <th>#</th>
                                                     <th>Şəkil</th>
+                                                    <th>Alt Şəkil</th>
                                                     <th>Başlıq</th>
                                                     <th>Mətn</th>
                                                     <th>Status</th>
@@ -75,7 +76,18 @@
                                                     <td>{{ $loop->iteration }}</td>
                                                     <td>
                                                         @if($service->image)
-                                                            <img src="{{ asset($service->image) }}" alt="Service Image" width="50">
+                                                            <img src="{{ asset($service->image) }}" alt="Service Image" 
+                                                                 class="img-thumbnail" 
+                                                                 style="width: 150px; height: 100px; object-fit: cover;">
+                                                        @else
+                                                            <span class="text-muted">Şəkil yoxdur</span>
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        @if($service->bottom_image)
+                                                            <img src="{{ asset($service->bottom_image) }}" alt="Bottom Image" 
+                                                                 class="img-thumbnail" 
+                                                                 style="width: 150px; height: 100px; object-fit: cover;">
                                                         @else
                                                             <span class="text-muted">Şəkil yoxdur</span>
                                                         @endif
@@ -121,6 +133,7 @@
                                                 <tr>
                                                     <th>#</th>
                                                     <th>Image</th>
+                                                    <th>Bottom Image</th>
                                                     <th>Title</th>
                                                     <th>Description</th>
                                                     <th>Status</th>
@@ -133,7 +146,18 @@
                                                     <td>{{ $loop->iteration }}</td>
                                                     <td>
                                                         @if($service->image)
-                                                            <img src="{{ asset($service->image) }}" alt="Service Image" width="50">
+                                                            <img src="{{ asset($service->image) }}" alt="Service Image" 
+                                                                 class="img-thumbnail" 
+                                                                 style="width: 150px; height: 100px; object-fit: cover;">
+                                                        @else
+                                                            <span class="text-muted">No image</span>
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        @if($service->bottom_image)
+                                                            <img src="{{ asset($service->bottom_image) }}" alt="Bottom Image" 
+                                                                 class="img-thumbnail" 
+                                                                 style="width: 150px; height: 100px; object-fit: cover;">
                                                         @else
                                                             <span class="text-muted">No image</span>
                                                         @endif
@@ -179,6 +203,7 @@
                                                 <tr>
                                                     <th>#</th>
                                                     <th>Изображение</th>
+                                                    <th>Нижнее Изображение</th>
                                                     <th>Заголовок</th>
                                                     <th>Описание</th>
                                                     <th>Статус</th>
@@ -191,7 +216,18 @@
                                                     <td>{{ $loop->iteration }}</td>
                                                     <td>
                                                         @if($service->image)
-                                                            <img src="{{ asset($service->image) }}" alt="Service Image" width="50">
+                                                            <img src="{{ asset($service->image) }}" alt="Service Image" 
+                                                                 class="img-thumbnail" 
+                                                                 style="width: 150px; height: 100px; object-fit: cover;">
+                                                        @else
+                                                            <span class="text-muted">Нет изображения</span>
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        @if($service->bottom_image)
+                                                            <img src="{{ asset($service->bottom_image) }}" alt="Bottom Image" 
+                                                                 class="img-thumbnail" 
+                                                                 style="width: 150px; height: 100px; object-fit: cover;">
                                                         @else
                                                             <span class="text-muted">Нет изображения</span>
                                                         @endif

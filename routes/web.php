@@ -9,6 +9,8 @@ use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\Admin\AboutController;
 use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Admin\ServiceController;
+use App\Http\Controllers\Admin\CertificateController;
+use App\Http\Controllers\Admin\ContactFormController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,7 +46,7 @@ Route::prefix('admin')->group(function () {
 
         Route::post('logout', [AdminController::class, 'logout'])->name('admin.logout');
 
-        Route::prefix('pages')->name('pages.')->group(function () {
+        Route::prefix('pages')->name('pages.')->middleware(['auth', 'verified'])->group(function () {
             Route::get('header', [HeaderController::class, 'index'])->name('header.index');
             Route::get('header/create', [HeaderController::class, 'create'])->name('header.create');
             Route::post('header', [HeaderController::class, 'store'])->name('header.store');
@@ -65,6 +67,14 @@ Route::prefix('admin')->group(function () {
             Route::post('service/{service}/toggle-status', [ServiceController::class, 'toggleStatus'])->name('service.toggle-status');
             Route::get('contact', [ContactController::class, 'index'])->name('contact.index');
             Route::put('contact/update', [ContactController::class, 'update'])->name('contact.update');
+            Route::get('contact-form', [ContactFormController::class, 'index'])->name('contact-form.index');
+            Route::get('contact-form/{contactForm}', [ContactFormController::class, 'show'])->name('contact-form.show');
+            Route::delete('contact-form/{contactForm}', [ContactFormController::class, 'destroy'])->name('contact-form.destroy');
+            Route::post('contact-form/{contactForm}/mark-as-read', [ContactFormController::class, 'markAsRead'])->name('contact-form.mark-as-read');
+            Route::post('contact-form/{contactForm}/mark-as-unread', [ContactFormController::class, 'markAsUnread'])->name('contact-form.mark-as-unread');
+            Route::delete('contact-form-bulk-delete', [ContactFormController::class, 'bulkDelete'])->name('contact-form.bulk-delete');
+            Route::resource('certificate', CertificateController::class);
+            Route::post('certificate/{certificate}/toggle-status', [CertificateController::class, 'toggleStatus'])->name('certificate.toggle-status');
         });
     });
 });

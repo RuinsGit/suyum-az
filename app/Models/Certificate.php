@@ -4,17 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Service extends Model
+class Certificate extends Model
 {
     protected $fillable = [
-        'title_az',
-        'title_en',
-        'title_ru',
-        'description_az',
-        'description_en',
-        'description_ru',
         'image',
-        'bottom_image',
+        'text_az',
+        'text_en',
+        'text_ru',
         'status'
     ];
 

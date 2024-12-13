@@ -5,20 +5,20 @@
             <div class="navbar-brand-box">
                 <a href="{{ route('admin.dashboard') }}" class="logo logo-dark">
                     <span class="logo-sm">
-                        <img src="{{ asset('back/assets/images/logo-eneraz.webp') }}" alt="logo-sm" height="25">
+                        <img src="{{ asset('back/assets/images/suyum_logo.png') }}" alt="logo-sm" height="25">
                     </span>
                     <span class="logo-lg">
-                        <img src="{{ asset('back/assets/images/logo-eneraz.webp') }}" alt="logo-dark" height="50">
+                        <img src="{{ asset('back/assets/images/suyum_logo.png') }}" alt="logo-dark" height="50">
                     </span>
                 </a>
 
                 <a href="{{ route('admin.dashboard') }}" class="logo logo-light">
                     <span class="logo-sm">
-                        <img src="{{ asset('back/assets/images/logo-eneraz.webp') }}" alt="logo-sm-light"
+                        <img src="{{ asset('back/assets/images/suyum_logo.png') }}" alt="logo-sm-light"
                             height="25">
                     </span>
                     <span class="logo-lg">
-                        <img src="{{ asset('back/assets/images/logo-eneraz.webp') }}" alt="logo-light" height="50">
+                        <img src="{{ asset('back/assets/images/suyum_logo.png') }}" alt="logo-light" height="50">
                     </span>
                 </a>
             </div>
@@ -31,7 +31,7 @@
             <div class="dropdown d-inline-block user-dropdown">
                 <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img width="80" src="{{ asset('back/assets/images/logo-eneraz.webp') }}" alt="Header Avatar">
+                    <img width="80" src="{{ asset('back/assets/images/suyum_logo.png') }}" alt="Header Avatar">
                     <span class="d-none d-xl-inline-block ms-1">{{ auth()->guard('admin')->user()->name }}</span>
                     <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
                 </button>

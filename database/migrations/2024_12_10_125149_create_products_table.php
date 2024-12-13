@@ -35,18 +35,18 @@ return new class extends Migration
             $table->string('country_en')->nullable();
             $table->string('country_ru')->nullable();
     
-            // Fiyat ve taksit bilgileri
+           
             $table->decimal('price', 10, 2);
             $table->decimal('annual_percentage', 5, 2)->default(0);
             $table->string('installment_months')->nullable();
     
-            // Kurye ve kurulum
+           
             $table->boolean('has_courier')->default(false);
             $table->decimal('courier_price', 10, 2)->nullable();
             $table->boolean('has_installation')->default(false);
             $table->decimal('installation_price', 10, 2)->nullable();
     
-            // Resimler
+            
             $table->string('main_image');
             $table->string('courier_image')->nullable();
             $table->string('installation_image')->nullable();

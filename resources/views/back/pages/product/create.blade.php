@@ -105,6 +105,16 @@
                                                 <label class="form-label">Ölkə (AZ)</label>
                                                 <input type="text" name="country_az" value="{{ old('country_az') }}" class="form-control">
                                             </div>
+                                            <div class="col-md-12 mb-3">
+                                                <label class="form-label">Təsvir (AZ)</label>
+                                                <textarea 
+                                                    name="description_az" 
+                                                    class="form-control summernote @error('description_az') is-invalid @enderror"
+                                                >{{ old('description_az') }}</textarea>
+                                                @error('description_az')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
                                         </div>
                                     </div>
 
@@ -142,6 +152,16 @@
                                                 <label class="form-label">Country (EN)</label>
                                                 <input type="text" name="country_en" value="{{ old('country_en') }}" class="form-control">
                                             </div>
+                                            <div class="col-md-12 mb-3">
+                                                <label class="form-label">Description (EN)</label>
+                                                <textarea 
+                                                    name="description_en" 
+                                                    class="form-control summernote @error('description_en') is-invalid @enderror"
+                                                >{{ old('description_en') }}</textarea>
+                                                @error('description_en')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
                                         </div>
                                     </div>
 
@@ -178,6 +198,16 @@
                                             <div class="col-md-6 mb-3">
                                                 <label class="form-label">Страна (RU)</label>
                                                 <input type="text" name="country_ru" value="{{ old('country_ru') }}" class="form-control">
+                                            </div>
+                                            <div class="col-md-12 mb-3">
+                                                <label class="form-label">Описание (RU)</label>
+                                                <textarea 
+                                                    name="description_ru" 
+                                                    class="form-control summernote @error('description_ru') is-invalid @enderror"
+                                                >{{ old('description_ru') }}</textarea>
+                                                @error('description_ru')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
                                             </div>
                                         </div>
                                     </div>
@@ -319,7 +349,13 @@
     </div>
 @endsection
 
+@push('css')
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+@endpush
+
 @push('js')
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 <script>
 function calculateLoan() {
     const price = parseFloat(document.querySelector('input[name="price"]').value) || 0;
@@ -428,6 +464,20 @@ $(document).ready(function() {
             }
         });
     });
+
+    $(".summernote").summernote({
+        height: 200,
+        toolbar: [
+            ['style', ['style']],
+            ['font', ['bold', 'underline', 'clear']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['table', ['table']],
+            ['insert', ['link']],
+            ['view', ['fullscreen', 'codeview', 'help']]
+        ]
+    });
+    $('.dropdown-toggle').dropdown();
 });
 </script>
 @endpush

@@ -42,7 +42,10 @@ class Product extends Model
         'installation_image',
         'payment_image_1',
         'payment_image_2',
-        'status'
+        'status',
+        'description_az',
+        'description_en',
+        'description_ru'
     ];
 
     protected $casts = [

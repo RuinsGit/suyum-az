@@ -81,6 +81,7 @@ Route::prefix('admin')->group(function () {
             Route::post('customer/{customer}/toggle-status', [CustomerController::class, 'toggleStatus'])->name('customer.toggle-status');
             Route::resource('project', ProjectController::class);
             Route::post('project/{project}/toggle-status', [ProjectController::class, 'toggleStatus'])->name('project.toggle-status');
+            Route::delete('/admin/product/{id}', [ProductController::class, 'destroy'])->name('pages.product.destroy');
         });
     });
 });

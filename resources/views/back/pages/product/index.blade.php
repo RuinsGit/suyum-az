@@ -129,10 +129,11 @@
                                             <td class="text-center">{{ $product->id }}</td>
                                             <td>
                                                 @if($product->main_image)
-                                                    <img src="{{ asset($product->main_image) }}" 
-                                                         alt="{{ $product->name_az }}"
-                                                         class="img-thumbnail"
-                                                         style="max-width: 80px;">
+                                                    <div class="product-image-container">
+                                                        <img src="{{ asset($product->main_image) }}" 
+                                                             alt="{{ $product->name_az }}"
+                                                             class="img-thumbnail product-image">
+                                                    </div>
                                                 @else
                                                     <div class="text-center text-muted">
                                                         <i class="ri-image-line" style="font-size: 2rem;"></i>
@@ -249,6 +250,20 @@
     .table > :not(caption) > * > * {
         vertical-align: middle;
     }
+    .product-image-container {
+        width: 100px;
+        height: 100px;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .product-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
 </style>
 @endpush
 
@@ -262,6 +277,8 @@ $(document).ready(function() {
     $('.delete-form').on('submit', function(e) {
         e.preventDefault();
         
+        let form = $(this);
+        
         Swal.fire({
             title: 'Diqqət!',
             text: 'Bu məhsulu silmək istədiyinizə əminsiniz?',
@@ -273,7 +290,27 @@ $(document).ready(function() {
             cancelButtonColor: '#3085d6'
         }).then((result) => {
             if (result.isConfirmed) {
-                this.submit();
+                $.ajax({
+                    url: form.attr('action'),
+                    type: 'POST',
+                    data: form.serialize(),
+                    success: function(response) {
+                        Swal.fire({
+                            title: 'Uğurlu!',
+                            text: 'Məhsul uğurla silindi',
+                            icon: 'success'
+                        }).then(() => {
+                            location.reload();
+                        });
+                    },
+                    error: function(xhr) {
+                        Swal.fire({
+                            title: 'Xəta!',
+                            text: 'Məhsul silinərkən xəta baş verdi',
+                            icon: 'error'
+                        });
+                    }
+                });
             }
         });
     });

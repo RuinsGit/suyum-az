@@ -34,6 +34,7 @@
     <!-- App Css-->
     <link href="{{ asset('back/assets/') }}/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
     @stack('css')
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 
 <body data-topbar="dark">
@@ -86,6 +87,17 @@
 
     <!-- App js -->
     <script src="{{ asset('back/assets/') }}/js/app.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        // AJAX için CSRF token ayarı
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+    </script>
     @stack('js')
 </body>
 

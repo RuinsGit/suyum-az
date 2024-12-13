@@ -119,6 +119,20 @@
                     </a>
                 </li>
 
+                <li>
+                    <a href="{{ route('pages.customer.index') }}" class="waves-effect">
+                        <i class="ri-user-line"></i>
+                        <span>Müştərilər</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ route('pages.project.index') }}" class="waves-effect">
+                        <i class="ri-building-line"></i>
+                        <span>Layihələr</span>
+                    </a>
+                </li>
+
                 
             </ul>
         </div>

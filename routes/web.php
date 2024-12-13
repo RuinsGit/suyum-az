@@ -11,6 +11,8 @@ use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\CertificateController;
 use App\Http\Controllers\Admin\ContactFormController;
+use App\Http\Controllers\Admin\CustomerController;
+use App\Http\Controllers\Admin\ProjectController;
 
 /*
 |--------------------------------------------------------------------------
@@ -75,6 +77,10 @@ Route::prefix('admin')->group(function () {
             Route::delete('contact-form-bulk-delete', [ContactFormController::class, 'bulkDelete'])->name('contact-form.bulk-delete');
             Route::resource('certificate', CertificateController::class);
             Route::post('certificate/{certificate}/toggle-status', [CertificateController::class, 'toggleStatus'])->name('certificate.toggle-status');
+            Route::resource('customer', CustomerController::class);
+            Route::post('customer/{customer}/toggle-status', [CustomerController::class, 'toggleStatus'])->name('customer.toggle-status');
+            Route::resource('project', ProjectController::class);
+            Route::post('project/{project}/toggle-status', [ProjectController::class, 'toggleStatus'])->name('project.toggle-status');
         });
     });
 });

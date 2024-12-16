@@ -21,4 +21,14 @@ class Service extends Model
     protected $casts = [
         'status' => 'boolean'
     ];
+
+    public function getTitleAttribute()
+    {
+        return $this->{'title_' . app()->getLocale()};
+    }
+
+    public function getDescriptionAttribute()
+    {
+        return $this->{'description_' . app()->getLocale()};
+    }
 }

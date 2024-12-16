@@ -15,4 +15,14 @@ class About extends Model
         'description_ru',
         'video'
     ];
+
+    public function getTitleAttribute()
+    {
+        return $this->{'title_' . app()->getLocale()};
+    }
+
+    public function getDescriptionAttribute()
+    {
+        return $this->{'description_' . app()->getLocale()};
+    }
 }

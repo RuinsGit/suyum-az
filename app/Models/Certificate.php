@@ -17,4 +17,9 @@ class Certificate extends Model
     protected $casts = [
         'status' => 'boolean'
     ];
+
+    public function getTextAttribute()
+    {
+        return $this->{'text_' . app()->getLocale()};
+    }
 }

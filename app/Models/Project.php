@@ -36,6 +36,31 @@ class Project extends Model
         'status' => 'boolean'
     ];
 
+    public function getNameAttribute()
+    {
+        return $this->{'name_' . app()->getLocale()};
+    }
+
+    public function getText1Attribute()
+    {
+        return $this->{'text1_' . app()->getLocale()};
+    }
+
+    public function getText2Attribute()
+    {
+        return $this->{'text2_' . app()->getLocale()};
+    }
+
+    public function getDescription1Attribute()
+    {
+        return $this->{'description1_' . app()->getLocale()};
+    }
+
+    public function getDescription2Attribute()
+    {
+        return $this->{'description2_' . app()->getLocale()};
+    }
+
     // Slug oluşturma
     protected static function boot()
     {

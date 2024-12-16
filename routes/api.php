@@ -5,6 +5,11 @@ use App\Http\Controllers\Api\HeaderController;
 use App\Http\Controllers\Api\ContactController;
 use App\Http\Controllers\Api\ContactFormController;
 use App\Http\Controllers\Api\ProductController;
+use App\Http\Controllers\Api\AboutController;
+use App\Http\Controllers\Api\CertificateController;
+use App\Http\Controllers\Api\ServiceController;
+use App\Http\Controllers\Api\CustomerController;
+use App\Http\Controllers\Api\ProjectController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +34,25 @@ Route::prefix('/')->group(function () {
     // Product routes
     Route::get('/products', [ProductController::class, 'index']);
     Route::get('/products/{id}', [ProductController::class, 'show']);
+    
+    // About route
+    Route::get('/about', [AboutController::class, 'index']);
+    
+    // Certificate routes
+    Route::get('/certificates', [CertificateController::class, 'index']);
+    Route::get('/certificates/{id}', [CertificateController::class, 'show']);
+    
+    // Service routes
+    Route::get('/services', [ServiceController::class, 'index']);
+    Route::get('/services/{id}', [ServiceController::class, 'show']);
+    
+    // Customer routes
+    Route::get('/customers', [CustomerController::class, 'index']);
+    Route::get('/customers/{id}', [CustomerController::class, 'show']);
+    
+    // Project routes
+    Route::get('/projects', [ProjectController::class, 'index']);
+    Route::get('/projects/{id}', [ProjectController::class, 'show']);
 });
 
 

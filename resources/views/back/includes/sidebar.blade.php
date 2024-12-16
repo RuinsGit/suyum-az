@@ -133,6 +133,20 @@
                     </a>
                 </li>
 
+                <li>
+                    <a href="{{ route('pages.translations.index') }}" class="waves-effect">
+                        <i class="ri-translate"></i>
+                        <span>Tərcümələr</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ route('pages.social.index') }}" class="waves-effect">
+                        <i class="ri-share-line"></i>
+                        <span>Sosial Şəbəkələr</span>
+                    </a>
+                </li>
+
                 
             </ul>
         </div>

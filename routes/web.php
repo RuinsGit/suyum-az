@@ -13,7 +13,8 @@ use App\Http\Controllers\Admin\CertificateController;
 use App\Http\Controllers\Admin\ContactFormController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\ProjectController;
-
+use App\Http\Controllers\Admin\TranslationController;
+use App\Http\Controllers\Admin\SocialMediaController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -82,6 +83,11 @@ Route::prefix('admin')->group(function () {
             Route::resource('project', ProjectController::class);
             Route::post('project/{project}/toggle-status', [ProjectController::class, 'toggleStatus'])->name('project.toggle-status');
             Route::delete('/admin/product/{id}', [ProductController::class, 'destroy'])->name('pages.product.destroy');
+            Route::get('translations', [TranslationController::class, 'index'])->name('translations.index');
+            Route::post('translations/update', [TranslationController::class, 'update'])->name('translations.update');
+            Route::resource('social', App\Http\Controllers\Admin\SocialMediaController::class);
+            Route::post('social/order', [App\Http\Controllers\Admin\SocialMediaController::class, 'updateOrder'])
+                ->name('social.order');
         });
     });
 });

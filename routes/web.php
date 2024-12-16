@@ -40,7 +40,8 @@ Route::prefix('admin')->group(function () {
 
     Route::middleware('auth:admin')->group(function () {
         Route::get('dashboard', function () {
-            return view('back.admin.dashboard');
+            $dashboardController = new \App\Http\Controllers\Admin\DashboardController();
+            return $dashboardController->index();
         })->name('admin.dashboard');
 
         Route::get('profile', function () {

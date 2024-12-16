@@ -86,6 +86,8 @@ Route::prefix('admin')->group(function () {
             Route::get('translations', [TranslationController::class, 'index'])->name('translations.index');
             Route::post('translations/update', [TranslationController::class, 'update'])->name('translations.update');
             Route::resource('social', App\Http\Controllers\Admin\SocialMediaController::class);
+            Route::post('social/{social}/toggle-status', [App\Http\Controllers\Admin\SocialMediaController::class, 'toggleStatus'])
+                ->name('social.toggle-status');
             Route::post('social/order', [App\Http\Controllers\Admin\SocialMediaController::class, 'updateOrder'])
                 ->name('social.order');
         });

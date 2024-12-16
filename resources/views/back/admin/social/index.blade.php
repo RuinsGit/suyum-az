@@ -47,9 +47,12 @@
                                             </td>
                                             <td>{{ $social->link }}</td>
                                             <td>
-                                                <span class="badge bg-{{ $social->status ? 'success' : 'danger' }}">
-                                                    {{ $social->status ? 'Aktiv' : 'Deaktiv' }}
-                                                </span>
+                                                <form action="{{ route('pages.social.toggle-status', $social->id) }}" method="POST" class="d-inline-block">
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-sm btn-{{ $social->status ? 'success' : 'danger' }}">
+                                                        {{ $social->status ? 'Aktiv' : 'Deaktiv' }}
+                                                    </button>
+                                                </form>
                                             </td>
                                             <td>
                                                 <a href="{{ route('pages.social.edit', $social->id) }}" 
@@ -82,6 +85,7 @@
 
 @section('script')
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         $(function() {
             $('.sortable').sortable({
@@ -93,5 +97,61 @@
                 }
             });
         });
+
+        function toggleStatus(socialId) {
+            Swal.fire({
+                title: 'Statusu dəyişmək istədiyinizdən əminsiniz?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Bəli',
+                cancelButtonText: 'Xeyr'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const formData = new FormData();
+                    formData.append('_token', '{{ csrf_token() }}');
+
+                    fetch(`/admin/pages/social/toggle-status/${socialId}`, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        },
+                        body: formData
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.success) {
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'success',
+                                title: data.message,
+                                showConfirmButton: false,
+                                timer: 1500
+                            }).then(() => {
+                                window.location.reload();
+                            });
+                        } else {
+                            throw new Error(data.message || 'Status dəyişdirilə bilmədi.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'error',
+                            title: error.message || 'Bir problem yaşandı.',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    });
+                }
+            });
+        }
     </script>
 @endsection

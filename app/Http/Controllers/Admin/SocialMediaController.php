@@ -105,6 +105,16 @@ class SocialMediaController extends Controller
             SocialMedia::where('id', $order['id'])->update(['order' => $order['position']]);
         }
 
-        return response()->json(['success' => true]);
+        return redirect()->route('pages.social.index')
+        ->with('success', 'Sosial media uğurla silindi.');
+    }
+
+    public function toggleStatus($id)
+    {
+        $social = SocialMedia::findOrFail($id);
+        $social->status = !$social->status;
+        $social->save();
+
+        return redirect()->back()->with('success', 'Status uğurla dəyişdirildi');
     }
 }

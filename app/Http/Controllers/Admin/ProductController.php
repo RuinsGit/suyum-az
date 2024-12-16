@@ -289,7 +289,7 @@ class ProductController extends Controller
         $validTypes = ['main_image', 'courier_image', 'installation_image', 'payment_image_1', 'payment_image_2'];
 
         if (!in_array($type, $validTypes)) {
-            return response()->json(['success' => false, 'message' => 'Geçersiz resim tipi'], 400);
+            return response()->json(['success' => false, 'message' => 'Seçilən resim tipi mövcud deyil'], 400);
         }
 
         if ($product->$type && File::exists(public_path($product->$type))) {
@@ -298,7 +298,7 @@ class ProductController extends Controller
             return response()->json(['success' => true]);
         }
 
-        return response()->json(['success' => false, 'message' => 'Resim bulunamadı'], 404);
+        return response()->json(['success' => false, 'message' => 'Sekil tapilmadi'], 404);
     }
 
     public function toggleStatus($id)

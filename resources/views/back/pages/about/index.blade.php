@@ -72,14 +72,14 @@
                                     <!-- İngilis dili -->
                                     <div class="tab-pane" id="en">
                                         <div class="mb-3">
-                                            <label class="form-label">Başlıq (En)</label>
+                                            <label class="form-label">Title (En)</label>
                                             <input type="text" name="title_en" class="form-control" value="{{ $about?->title_en }}">
                                             @error('title_en')
                                                 <div class="invalid-feedback" style="display: block">{{ $message }}</div>
                                             @enderror
                                         </div>
                                         <div class="mb-3">
-                                            <label class="form-label">Mətn (En)</label>
+                                            <label class="form-label">Description (En)</label>
                                             <textarea name="description_en" class="form-control summernote">{{ $about?->description_en }}</textarea>
                                             @error('description_en')
                                                 <div class="invalid-feedback" style="display: block">{{ $message }}</div>
@@ -90,14 +90,14 @@
                                     <!-- Rus dili -->
                                     <div class="tab-pane" id="ru">
                                         <div class="mb-3">
-                                            <label class="form-label">Başlıq (Ru)</label>
+                                            <label class="form-label">Заголовок (Ru)</label>
                                             <input type="text" name="title_ru" class="form-control" value="{{ $about?->title_ru }}">
                                             @error('title_ru')
                                                 <div class="invalid-feedback" style="display: block">{{ $message }}</div>
                                             @enderror
                                         </div>
                                         <div class="mb-3">
-                                            <label class="form-label">Mətn (Ru)</label>
+                                            <label class="form-label">Описание (Ru)</label>
                                             <textarea name="description_ru" class="form-control summernote">{{ $about?->description_ru }}</textarea>
                                             @error('description_ru')
                                                 <div class="invalid-feedback" style="display: block">{{ $message }}</div>

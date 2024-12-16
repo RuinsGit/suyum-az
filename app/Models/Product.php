@@ -48,6 +48,48 @@ class Product extends Model
         'description_ru'
     ];
 
+    public function getNameAttribute()
+    {
+        return $this->{'name_' . app()->getLocale()};
+    }
+
+    public function getCartridgeAttribute()
+    {
+        return $this->{'cartridge_' . app()->getLocale()};
+    }
+
+    public function getPressureRangeAttribute()
+    {
+        return $this->{'pressure_range_' . app()->getLocale()};
+    }
+
+    public function getTemperatureRangeAttribute()
+    {
+        return $this->{'temperature_range_' . app()->getLocale()};
+    }
+
+    public function getDimensionsAttribute()
+    {
+        return $this->{'dimensions_' . app()->getLocale()};
+    }
+
+    public function getWarrantyAttribute()
+    {
+        return $this->{'warranty_' . app()->getLocale()};
+    }
+
+    public function getCountryAttribute()
+    {
+        return $this->{'country_' . app()->getLocale()};
+    }
+
+    public function getDescriptionAttribute()
+    {
+        return $this->{'description_' . app()->getLocale()};
+    }
+
+    
+
     protected $casts = [
         'price' => 'decimal:2',
         'monthly_percentage' => 'decimal:2',

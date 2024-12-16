@@ -26,4 +26,20 @@ class Contact extends Model
     protected $casts = [
         'status' => 'boolean'
     ];
+
+    public function getTitle1Attribute()
+    {
+        return $this->{'title1_' . app()->getLocale()};
+    }
+
+    public function getTitle2Attribute()
+    {
+        return $this->{'title2_' . app()->getLocale()};
+    }
+
+    public function getDescriptionAttribute()
+    {
+        return $this->{'description_' . app()->getLocale()};
+    }
+    
 }

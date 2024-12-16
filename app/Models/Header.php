@@ -20,4 +20,44 @@ class Header extends Model
         'contact_az', 'contact_en', 'contact_ru',
         'status'
     ];
+
+    public function getHomeAttribute()
+    {
+        return $this->{'home_' . app()->getLocale()};
+    }
+
+    public function getAboutAttribute()
+    {
+        return $this->{'about_' . app()->getLocale()};
+    }
+
+    public function getProductsAttribute()
+    {
+        return $this->{'products_' . app()->getLocale()};
+    }
+
+    public function getServicesAttribute()
+    {
+        return $this->{'services_' . app()->getLocale()};
+    }
+
+    public function getProjectsAttribute()
+    {
+        return $this->{'projects_' . app()->getLocale()};
+    }
+
+    public function getCertificatesAttribute()
+    {
+        return $this->{'certificates_' . app()->getLocale()};
+    }
+
+    public function getCustomersAttribute()
+    {
+        return $this->{'customers_' . app()->getLocale()};
+    }
+
+    public function getContactAttribute()
+    {
+        return $this->{'contact_' . app()->getLocale()};
+    }       
 }

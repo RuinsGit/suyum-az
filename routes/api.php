@@ -1,7 +1,10 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\HeaderController;
+use App\Http\Controllers\Api\ContactController;
+use App\Http\Controllers\Api\ContactFormController;
+use App\Http\Controllers\Api\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,5 +18,21 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+    return $request->user(); 
 });
+
+Route::prefix('/')->group(function () {
+    Route::get('/header', [HeaderController::class, 'index']);
+    Route::get('/contact', [ContactController::class, 'index']);
+    Route::post('/contact-form', [ContactFormController::class, 'store']);
+    
+    // Product routes
+    Route::get('/products', [ProductController::class, 'index']);
+    Route::get('/products/{id}', [ProductController::class, 'show']);
+});
+
+
+
+
+
+

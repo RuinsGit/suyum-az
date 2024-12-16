@@ -328,6 +328,13 @@
                                         @enderror
                                     </div>
                                     <div class="col-md-4 mb-3">
+                                        <label class="form-label">Endirim (%)</label>
+                                        <input type="number" step="0.01" name="discount" value="{{ old('discount', $product->discount) }}" class="form-control @error('discount') is-invalid @enderror">
+                                        @error('discount')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                    <div class="col-md-4 mb-3">
                                         <label class="form-label">İllik faiz (%)</label>
                                         <input type="number" step="0.01" name="annual_percentage" value="{{ old('annual_percentage', $product->annual_percentage) }}" class="form-control @error('annual_percentage') is-invalid @enderror">
                                         @error('annual_percentage')
@@ -335,7 +342,7 @@
                                         @enderror
                                     </div>
                                     <div class="col-md-4 mb-3">
-                                        <label class="form-label">Taksit ayları</label>
+                                        <label class="form-label">Kredit müddətləri</label>
                                         <div class="d-flex flex-wrap gap-2">
                                             @php
                                                 $installmentMonths = old('installment_months', $product->installment_months ?? []);

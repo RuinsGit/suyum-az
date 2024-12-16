@@ -146,7 +146,19 @@
                                             </td>
                                             <td>{{ optional($product->category)->name_az }}</td>
                                             <td>
-                                                <div class="fw-bold mb-1">{{ number_format($product->price, 2) }} ₼</div>
+                                                @if($product->discount)
+                                                    <div class="fw-bold mb-1 font-size-15 text-success">
+                                                        {{ number_format($product->price * (1 - $product->discount / 100), 2) }} ₼
+                                                    </div>
+                                                    <small class="text-danger font-size-13 text-decoration-line-through">
+                                                        {{ number_format($product->price, 2) }} ₼
+                                                    </small>
+                                                    <small class="text-danger d-block">
+                                                        <i class="ri-discount-line"></i> {{ $product->discount }}% Endirim
+                                                    </small>
+                                                @else
+                                                    <div class="fw-bold mb-1 ">{{ number_format($product->price, 2) }} ₼</div>
+                                                @endif
                                                 @if($product->has_courier)
                                                     <small class="text-success d-block">
                                                         <i class="ri-truck-line"></i> Çatdırılma

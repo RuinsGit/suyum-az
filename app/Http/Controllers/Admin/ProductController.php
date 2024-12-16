@@ -59,6 +59,7 @@ class ProductController extends Controller
             'price' => 'required|numeric|min:0',
             'annual_percentage' => 'required|numeric|min:0|max:100',
             'main_image' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'discount' => 'nullable|numeric|min:0|max:100',
         ]);
 
         $data = $request->all();
@@ -163,6 +164,9 @@ class ProductController extends Controller
             }
         }
 
+        // İndirim alanını ekle
+        $data['discount'] = $request->input('discount', 0); // Varsayılan değer 0
+
         try {
             Product::create($data);
             return redirect()->route('pages.product.index')->with('success', 'Məhsul uğurla əlavə edildi.');
@@ -200,6 +204,7 @@ class ProductController extends Controller
             'installation_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'payment_image_1' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'payment_image_2' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'discount' => 'nullable|numeric|min:0|max:100',
         ]);
 
         try {
@@ -258,6 +263,9 @@ class ProductController extends Controller
                 $data['installation_price'] = null;
                 $data['installation_image'] = $product->installation_image; // Mevcut resmi koru
             }
+
+            // İndirim alanını güncelle
+            $data['discount'] = $request->input('discount', 0); // Varsayılan değer 0
 
             $product->update($data);
             return redirect()->route('pages.product.index')->with('success', 'Məhsul uğurla yeniləndi.');

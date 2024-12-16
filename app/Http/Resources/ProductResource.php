@@ -34,7 +34,9 @@ class ProductResource extends JsonResource
             'payment_image_1' => $this->payment_image_1 ? asset($this->payment_image_1) : null,
             'payment_image_2' => $this->payment_image_2 ? asset($this->payment_image_2) : null,
             'status' => (bool)$this->status,
-            'installment_options' => $this->getInstallmentOptions()
+            'installment_options' => $this->getInstallmentOptions(),
+            'discount' => (float)$this->discount,
+            
         ];
     }
 }

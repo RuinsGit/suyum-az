@@ -17,6 +17,21 @@ class Category extends Model
         'status'
     ];
 
+    public function getImageAttribute($value)
+    {
+        return asset($value);
+    }
+
+    public function getNameAttribute()
+    {
+        return $this->{'name_' . app()->getLocale()};
+    }
+
+    public function getDescriptionAttribute()
+    {
+        return $this->{'description_' . app()->getLocale()};
+    }
+
     public function subCategories()
     {
         return $this->hasMany(SubCategory::class);

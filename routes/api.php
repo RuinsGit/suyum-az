@@ -10,6 +10,8 @@ use App\Http\Controllers\Api\CertificateController;
 use App\Http\Controllers\Api\ServiceController;
 use App\Http\Controllers\Api\CustomerController;
 use App\Http\Controllers\Api\ProjectController;
+use App\Http\Controllers\Api\SocialMediaController;
+use App\Http\Controllers\Api\TranslationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,6 +55,14 @@ Route::prefix('/')->group(function () {
     // Project routes
     Route::get('/projects', [ProjectController::class, 'index']);
     Route::get('/projects/{id}', [ProjectController::class, 'show']);
+    
+    // Social Media routes
+    Route::get('/social-media', [SocialMediaController::class, 'index']);
+    Route::get('/social-media/{id}', [SocialMediaController::class, 'show']);
+    
+    // Translation routes
+    Route::get('/translations', [TranslationController::class, 'index']);
+    Route::post('/translations', [TranslationController::class, 'update']);
 });
 
 

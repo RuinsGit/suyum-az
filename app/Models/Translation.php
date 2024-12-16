@@ -17,4 +17,37 @@ class Translation extends Model
         'text7_az', 'text7_en', 'text7_ru',
         'text8_az', 'text8_en', 'text8_ru',
     ];
+
+    public function getText1Attribute()     
+    {
+        return $this->{'text1_' . app()->getLocale()};
+    }
+    public function getText2Attribute() 
+    {
+        return $this->{'text2_' . app()->getLocale()};
+    }
+    public function getText3Attribute() 
+    {
+        return $this->{'text3_' . app()->getLocale()};
+    }
+    public function getText4Attribute() 
+    {
+        return $this->{'text4_' . app()->getLocale()};
+    }
+    public function getText5Attribute() 
+    {
+        return $this->{'text5_' . app()->getLocale()};
+    }
+    public function getText6Attribute() 
+    {
+        return $this->{'text6_' . app()->getLocale()};
+    }
+    public function getText7Attribute() 
+    {
+        return $this->{'text7_' . app()->getLocale()};
+    }
+    public function getText8Attribute() 
+    {
+        return $this->{'text8_' . app()->getLocale()};
+    }   
 }

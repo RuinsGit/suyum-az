@@ -40,6 +40,15 @@ class ProductController extends Controller
 
         $products = $query->latest()->paginate(10);
 
+        // Ek para hesaplama
+        foreach ($products as $product) {
+            if ($product->annual_percentage > 0) {
+                $product->additional_cost = round($product->price * ($product->annual_percentage / 100), 2);
+            } else {
+                $product->additional_cost = 0;
+            }
+        }
+
         return view('back.pages.product.index', compact('products', 'categories'));
     }
 

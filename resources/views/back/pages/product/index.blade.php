@@ -147,7 +147,7 @@
                                             <td>{{ optional($product->category)->name_az }}</td>
                                             <td>
                                                 @if($product->discount)
-                                                    <div class="fw-bold mb-1 font-size-15 text-success">
+                                                    <div class="fw-bold mb-1 font-size-13 text-success">
                                                         {{ number_format($product->price * (1 - $product->discount / 100), 2) }} ₼
                                                     </div>
                                                     <small class="text-danger font-size-13 text-decoration-line-through">
@@ -174,7 +174,15 @@
                                                 @if($product->annual_percentage > 0)
                                                     <span class="badge bg-success">{{ $product->annual_percentage }}% illik</span>
                                                     <br>
-                                                    <small>{{ $product->installment_months }} ay</small>
+                                                    
+                                                    <div class="btn-group mt-2" role="group" aria-label="Kredi Taksit Seçenekleri">
+                                                        @foreach(explode(',', $product->installment_months) as $month)
+                                                            <button type="button" class="btn btn-outline-primary btn-sm" onclick="calculateAdditionalCost({{ $product->price }}, {{ $product->annual_percentage }}, {{ $month }}, {{ $product->id }})">
+                                                                {{ $month }} ay
+                                                            </button>
+                                                        @endforeach
+                                                    </div>
+                                                    <small class="text-success d-block mt-2" id="additional-cost-{{ $product->id }}"></small>
                                                 @else
                                                     <span class="badge bg-secondary">Kreditsiz</span>
                                                 @endif
@@ -327,10 +335,25 @@ $(document).ready(function() {
         });
     });
 
-    // Filter form avtomatik submit
+   
     $('#category, select[name="status"]').change(function() {
         $('#filterForm').submit();
     });
 });
+
+
+function calculateAdditionalCost(price, annualPercentage, months, productId) {
+    if (!months) {
+        document.getElementById(`additional-cost-${productId}`).innerText = '';
+        return;
+    }
+
+    
+    const monthlyInterestRate = (annualPercentage / 100) / 12; 
+    const totalPaid = price * (1 + (monthlyInterestRate * months)); 
+    const additionalCost = totalPaid - price; 
+
+    document.getElementById(`additional-cost-${productId}`).innerText = `Əlavə Kredit Gəliri: ${additionalCost.toFixed(2)} ₼`;
+}
 </script>
 @endpush

@@ -731,6 +731,54 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 $(document).ready(function() {
     // Kategori değiştiğinde alt kategorileri getir
     $('#category_id').on('change', function() {
@@ -767,7 +815,7 @@ $(document).ready(function() {
         });
     });
 
-    // Sayfa yüklendiğinde eğer kategori seçili ise alt kategorileri getir
+    
     if ($('#category_id').val()) {
         $('#category_id').trigger('change');
     }

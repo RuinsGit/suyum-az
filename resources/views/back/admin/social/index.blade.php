@@ -43,7 +43,7 @@
                                         <tr id="order-{{ $social->id }}">
                                             <td>{{ $loop->iteration }}</td>
                                             <td>
-                                                <img src="{{ asset($social->image) }}" alt="" style="height: 50px;">
+                                                <img src="{{ asset($social->image) }}" alt="" style="height: 50px; width: 50px; object-fit: cover; ">
                                             </td>
                                             <td>{{ $social->link }}</td>
                                             <td>

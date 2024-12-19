@@ -15,6 +15,8 @@ use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\ProjectController;
 use App\Http\Controllers\Admin\TranslationController;
 use App\Http\Controllers\Admin\SocialMediaController;
+use App\Http\Controllers\Admin\TranslationManageController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -91,6 +93,14 @@ Route::prefix('admin')->group(function () {
                 ->name('social.toggle-status');
             Route::post('social/order', [App\Http\Controllers\Admin\SocialMediaController::class, 'updateOrder'])
                 ->name('social.order');
+            Route::resource('translation-manage', TranslationManageController::class);
+            Route::get('translation-manage', [TranslationManageController::class, 'index'])->name('translation-manage.index');
+            Route::get('translation-manage/create', [TranslationManageController::class, 'create'])->name('translation-manage.create');
+            Route::post('translation-manage', [TranslationManageController::class, 'store'])->name('translation-manage.store');
+            Route::get('translation-manage/{translation}/edit', [TranslationManageController::class, 'edit'])->name('translation-manage.edit');
+            Route::put('translation-manage/{translation}', [TranslationManageController::class, 'update'])->name('translation-manage.update');
+            Route::delete('translation-manage/{translation}', [TranslationManageController::class, 'destroy'])->name('translation-manage.destroy');
+
         });
     });
 });

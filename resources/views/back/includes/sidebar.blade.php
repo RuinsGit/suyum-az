@@ -141,6 +141,13 @@
                 </li>
 
                 <li>
+                    <a href="{{ route('pages.translation-manage.index') }}" class="waves-effect">
+                        <i class="ri-translate"></i>
+                        <span>Tərcümələr İdarəetmə</span>
+                    </a>
+                </li>
+
+                <li>
                     <a href="{{ route('pages.social.index') }}" class="waves-effect">
                         <i class="ri-share-line"></i>
                         <span>Sosial Şəbəkələr</span>

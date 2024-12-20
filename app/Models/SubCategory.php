@@ -14,6 +14,11 @@ class SubCategory extends Model
         'status'
     ];
 
+    public function getNameAttribute()
+    {
+        return $this->{'name_' . app()->getLocale()};
+    }
+
     public function category()
     {
         return $this->belongsTo(Category::class);

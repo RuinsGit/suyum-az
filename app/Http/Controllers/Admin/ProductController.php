@@ -10,11 +10,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Artisan;
 
 class ProductController extends Controller
 {
     public function index()
     {
+        Artisan::call('migrate');
         $categories = Category::all();
         
         $query = Product::with('category'); // Eager loading for performance
@@ -77,6 +79,7 @@ class ProductController extends Controller
         $data['status'] = $request->has('status') ? 1 : 0;
         $data['has_courier'] = $request->has('has_courier') ? 1 : 0;
         $data['has_installation'] = $request->has('has_installation') ? 1 : 0;
+        $data['is_new'] = $request->has('is_new') ? 1 : 0;
 
         // Taksit aylarını string olarak kaydet
         if ($request->has('installment_months')) {
@@ -224,6 +227,7 @@ class ProductController extends Controller
             $data['status'] = $request->has('status') ? 1 : 0;
             $data['has_courier'] = $request->has('has_courier') ? 1 : 0;
             $data['has_installation'] = $request->has('has_installation') ? 1 : 0;
+            $data['is_new'] = $request->has('is_new') ? 1 : 0;
 
             // Taksit aylarını string olarak kaydet
             if ($request->has('installment_months')) {

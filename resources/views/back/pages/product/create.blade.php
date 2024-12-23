@@ -342,6 +342,13 @@
                                     </div>
                                 </div>
 
+                                <div class="mb-3">
+                                    <div class="form-check">
+                                        <input type="checkbox" name="is_new" id="is_new" class="form-check-input" value="1">
+                                        <label class="form-check-label" for="is_new">Yeni Məhsul</label>
+                                    </div>
+                                </div>
+
                                 <div class="row mt-4">
                                     <div class="col-12">
                                         <button type="submit" class="btn btn-primary">Yadda saxla</button>

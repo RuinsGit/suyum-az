@@ -33,7 +33,12 @@ class ProductController extends Controller
                 $query->where('price', '<=', $request->max_price);
             }
 
-            $products = $query->latest()->paginate(12);
+            // Kategoriye göre filtreleme
+            if ($request->has('category_ids')) {
+                $query->whereIn('category_id', $request->category_ids); // Birden fazla kategori ID'si ile filtreleme
+            }
+
+            $products = $query->with(['category', 'subCategory'])->latest()->paginate(12);
 
             return response()->json([
                 'success' => true,

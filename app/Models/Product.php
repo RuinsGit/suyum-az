@@ -47,6 +47,7 @@ class Product extends Model
         'description_en',
         'description_ru',
         'discount',
+        'is_new',
     ];
 
     public function getNameAttribute()

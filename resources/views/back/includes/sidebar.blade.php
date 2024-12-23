@@ -37,7 +37,7 @@
                         <li>
                             <a href="{{ route('pages.header.index') }}">
                                 <i class="mdi mdi-format-header-1"></i>
-                                <span>Başlıqlar</span>
+                                <span>Header</span>
                             </a>
                         </li>
                     </ul>

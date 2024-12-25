@@ -37,7 +37,7 @@ Route::prefix('admin')->group(function () {
         return redirect()->route('admin.login');
     });
 
-    Route::get('login', [AdminController::class, 'showLoginForm'])->name('admin.login');
+    Route::get('login', [AdminController::class, 'showLoginForm'])->name('admin.login')->middleware('guest:admin');
     Route::post('login', [AdminController::class, 'login'])->name('handle-login');
 
     Route::middleware('auth:admin')->group(function () {

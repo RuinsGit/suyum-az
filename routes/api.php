@@ -13,6 +13,7 @@ use App\Http\Controllers\Api\ProjectController;
 use App\Http\Controllers\Api\SocialMediaController;
 use App\Http\Controllers\Api\TranslationController;
 use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\TranslationManageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -61,6 +62,9 @@ Route::prefix('/')->group(function () {
     Route::get('/social-media', [SocialMediaController::class, 'index']);
     Route::get('/social-media/{id}', [SocialMediaController::class, 'show']);
     
+    // Translation Manage routes
+    Route::apiResource('translation-manage', TranslationManageController::class);
+
     // Translation routes
     Route::get('/translations', [TranslationController::class, 'index']);
     Route::post('/translations', [TranslationController::class, 'update']);
@@ -69,6 +73,9 @@ Route::prefix('/')->group(function () {
     Route::get('/categories', [CategoryController::class, 'index']);
     Route::get('/categories/{id}', [CategoryController::class, 'show']);
 });
+
+
+
 
 
 

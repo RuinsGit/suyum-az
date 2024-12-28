@@ -71,14 +71,23 @@ Route::prefix('admin')->group(function () {
             Route::put('about/update', [AboutController::class, 'update'])->name('about.update');
             Route::resource('service', ServiceController::class)->except(['show']);
             Route::post('service/{service}/toggle-status', [ServiceController::class, 'toggleStatus'])->name('service.toggle-status');
-            Route::get('contact', [ContactController::class, 'index'])->name('contact.index');
-            Route::put('contact/update', [ContactController::class, 'update'])->name('contact.update');
-            Route::get('contact-form', [ContactFormController::class, 'index'])->name('contact-form.index');
-            Route::get('contact-form/{contactForm}', [ContactFormController::class, 'show'])->name('contact-form.show');
-            Route::delete('contact-form/{contactForm}', [ContactFormController::class, 'destroy'])->name('contact-form.destroy');
-            Route::post('contact-form/{contactForm}/mark-as-read', [ContactFormController::class, 'markAsRead'])->name('contact-form.mark-as-read');
-            Route::post('contact-form/{contactForm}/mark-as-unread', [ContactFormController::class, 'markAsUnread'])->name('contact-form.mark-as-unread');
-            Route::delete('contact-form-bulk-delete', [ContactFormController::class, 'bulkDelete'])->name('contact-form.bulk-delete');
+            Route::prefix('contact')->name('contact.')->group(function () {
+                Route::get('/', [ContactController::class, 'index'])->name('index');
+                Route::get('/create', [ContactController::class, 'create'])->name('create');
+                Route::post('/', [ContactController::class, 'store'])->name('store');
+                Route::get('/{id}/edit', [ContactController::class, 'edit'])->name('edit');
+                Route::put('/{id}', [ContactController::class, 'update'])->name('update');
+                Route::delete('/{id}', [ContactController::class, 'destroy'])->name('destroy');
+                Route::post('/toggle-status/{id}', [ContactController::class, 'toggleStatus'])->name('toggle-status');
+            });
+            Route::prefix('contact-form')->name('contact-form.')->group(function () {
+                Route::get('/', [ContactFormController::class, 'index'])->name('index');
+                Route::get('/{contactForm}', [ContactFormController::class, 'show'])->name('show');
+                Route::delete('/{contactForm}', [ContactFormController::class, 'destroy'])->name('destroy');
+                Route::post('/{contactForm}/mark-as-read', [ContactFormController::class, 'markAsRead'])->name('mark-as-read');
+                Route::post('/{contactForm}/mark-as-unread', [ContactFormController::class, 'markAsUnread'])->name('mark-as-unread');
+                Route::delete('-bulk-delete', [ContactFormController::class, 'bulkDelete'])->name('bulk-delete');
+            });
             Route::resource('certificate', CertificateController::class);
             Route::post('certificate/{certificate}/toggle-status', [CertificateController::class, 'toggleStatus'])->name('certificate.toggle-status');
             Route::resource('customer', CustomerController::class);
@@ -100,7 +109,8 @@ Route::prefix('admin')->group(function () {
             Route::get('translation-manage/{translation}/edit', [TranslationManageController::class, 'edit'])->name('translation-manage.edit');
             Route::put('translation-manage/{translation}', [TranslationManageController::class, 'update'])->name('translation-manage.update');
             Route::delete('translation-manage/{translation}', [TranslationManageController::class, 'destroy'])->name('translation-manage.destroy');
-
         });
     });
 });
+
+

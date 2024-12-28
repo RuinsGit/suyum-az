@@ -2,24 +2,20 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Contact extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
-        'title1_az',
-        'title1_en',
-        'title1_ru',
-        'title2_az',
-        'title2_en',
-        'title2_ru',
-        'description_az',
-        'description_en',
-        'description_ru',
-        'number',
-        'image1',
-        'image2',
-        'image3',
+        'name_az', 'number_az', 'address_az', 'email_az',
+        'name_en', 'number_en', 'address_en', 'email_en',
+        'name_ru', 'number_ru', 'address_ru', 'email_ru',
+        'filial_name_az', 'filial_name_en', 'filial_name_ru',
+        'number_image', 'address_image', 'email_image',
+        'filial_text_az', 'filial_text_en', 'filial_text_ru',
         'status'
     ];
 
@@ -27,19 +23,29 @@ class Contact extends Model
         'status' => 'boolean'
     ];
 
-    public function getTitle1Attribute()
+    // Dil özelliklerine göre accessor'lar
+    public function getNameAttribute()
     {
-        return $this->{'title1_' . app()->getLocale()};
+        return $this->{'name_' . app()->getLocale()};
     }
 
-    public function getTitle2Attribute()
+    public function getNumberAttribute()
     {
-        return $this->{'title2_' . app()->getLocale()};
+        return $this->{'number_' . app()->getLocale()};
     }
 
-    public function getDescriptionAttribute()
+    public function getAddressAttribute()
     {
-        return $this->{'description_' . app()->getLocale()};
+        return $this->{'address_' . app()->getLocale()};
     }
-    
+
+    public function getEmailAttribute()
+    {
+        return $this->{'email_' . app()->getLocale()};
+    }
+
+    public function getFilialTextAttribute()
+    {
+        return $this->{'filial_text_' . app()->getLocale()};
+    }
 }

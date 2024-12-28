@@ -7,80 +7,199 @@ use App\Models\Contact;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 
+
 class ContactController extends Controller
 {
     public function index()
     {
-        $contact = Contact::first();
-        return view('back.pages.contact.index', compact('contact'));
+        
+        $contacts = Contact::all();
+        return view('back.pages.contact.index', compact('contacts'));
     }
 
-    public function update(Request $request)
+    public function create()
     {
+        return view('back.pages.contact.create');
+    }
+
+    public function store(Request $request)
+    {
+        // Debug için request verilerini görelim
+        \Log::info('Contact store request:', $request->all());
+
         $request->validate([
-            'title1_az' => 'required|string|max:255',
-            'title1_en' => 'required|string|max:255',
-            'title1_ru' => 'required|string|max:255',
-            'title2_az' => 'required|string|max:255',
-            'title2_en' => 'required|string|max:255',
-            'title2_ru' => 'required|string|max:255',
-            'description_az' => 'required',
-            'description_en' => 'required',
-            'description_ru' => 'required',
-            'number' => 'required|string|max:255',
-            'image1' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
-            'image2' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
-            'image3' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'name_az' => 'required|string|max:255',
+            'number_az' => 'required|string|max:255',
+            'address_az' => 'required|string|max:255',
+            'email_az' => 'required|email|max:255',
+            'name_en' => 'required|string|max:255',
+            'number_en' => 'required|string|max:255',
+            'address_en' => 'required|string|max:255',
+            'email_en' => 'required|email|max:255',
+            'name_ru' => 'required|string|max:255',
+            'number_ru' => 'required|string|max:255',
+            'address_ru' => 'required|string|max:255',
+            'email_ru' => 'required|email|max:255',
+            'number_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'address_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'email_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            
+            'filial_text_az' => 'nullable|string',
+            'filial_text_en' => 'nullable|string',
+            'filial_text_ru' => 'nullable|string',
         ]);
 
-        $contact = Contact::first();
-        if (!$contact) {
-            $contact = new Contact();
-        }
+        try {
+            $data = $request->only([
+                'name_az', 'number_az', 'address_az', 'email_az',
+                'name_en', 'number_en', 'address_en', 'email_en',
+                'name_ru', 'number_ru', 'address_ru', 'email_ru',
+                'filial_text_az', 'filial_text_en', 'filial_text_ru'
 
-        $data = $request->all();
-        
-        // Image 1
-        if ($request->hasFile('image1')) {
-            if ($contact->image1 && File::exists(public_path($contact->image1))) {
-                File::delete(public_path($contact->image1));
+            ]);
+
+            // Status ekle
+            $data['status'] = 1;
+
+            // Handle image uploads
+            $imageFields = ['number_image', 'address_image', 'email_image'];
+            foreach ($imageFields as $field) {
+                if ($request->hasFile($field)) {
+                    $file = $request->file($field);
+                    $fileName = time() . '_' . $field . '_' . $file->getClientOriginalName();
+                    $file->move(public_path('uploads/contact'), $fileName);
+                    $data[$field] = 'uploads/contact/' . $fileName;
+                }
             }
-            $file = $request->file('image1');
-            $fileName = time() . '_1_' . $file->getClientOriginalName();
-            $file->move(public_path('uploads/contact'), $fileName);
-            $data['image1'] = 'uploads/contact/' . $fileName;
-        }
 
-        // Image 2
-        if ($request->hasFile('image2')) {
-            if ($contact->image2 && File::exists(public_path($contact->image2))) {
-                File::delete(public_path($contact->image2));
+            // Debug için oluşturulacak veriyi görelim
+            \Log::info('Contact create data:', $data);
+
+            $contact = Contact::create($data);
+            
+            // Debug için oluşturulan kaydı görelim
+            \Log::info('Created contact:', $contact->toArray());
+
+            return redirect()->route('pages.contact.index')
+                ->with('success', 'Əlaqə məlumatları uğurla əlavə edildi.');
+        } catch (\Exception $e) {
+            // Hata durumunda log'a yazalım
+            \Log::error('Contact create error:', [
+                'message' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+
+            return redirect()->back()
+                ->with('error', 'Xəta baş verdi: ' . $e->getMessage())
+                ->withInput();
+        }
+    }
+
+    public function edit($id)
+    {
+        $contact = Contact::findOrFail($id);
+        return view('back.pages.contact.edit', compact('contact'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'name_az' => 'required|string|max:255',
+            'number_az' => 'required|string|max:255',
+            'address_az' => 'required|string|max:255',
+            'email_az' => 'required|email|max:255',
+            'name_en' => 'required|string|max:255',
+            'number_en' => 'required|string|max:255',
+            'address_en' => 'required|string|max:255',
+            'email_en' => 'required|email|max:255',
+            'name_ru' => 'required|string|max:255',
+            'number_ru' => 'required|string|max:255',
+            'address_ru' => 'required|string|max:255',
+            'email_ru' => 'required|email|max:255',
+            'number_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'address_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'email_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+           
+            'filial_text_az' => 'nullable|string',
+            'filial_text_en' => 'nullable|string',
+            'filial_text_ru' => 'nullable|string',
+        ]);
+
+        try {
+            $contact = Contact::findOrFail($id);
+            $data = $request->only([
+                'name_az', 'number_az', 'address_az', 'email_az',
+                'name_en', 'number_en', 'address_en', 'email_en',
+                'name_ru', 'number_ru', 'address_ru', 'email_ru',
+                'filial_text_az', 'filial_text_en', 'filial_text_ru'
+            ]);
+
+            // Handle image uploads
+            $imageFields = ['number_image', 'address_image', 'email_image'];
+            foreach ($imageFields as $field) {
+                if ($request->hasFile($field)) {
+                    // Delete old image if exists
+                    if ($contact->$field && File::exists(public_path($contact->$field))) {
+                        File::delete(public_path($contact->$field));
+                    }
+                    
+                    $file = $request->file($field);
+                    $fileName = time() . '_' . $field . '_' . $file->getClientOriginalName();
+                    $file->move(public_path('uploads/contact'), $fileName);
+                    $data[$field] = 'uploads/contact/' . $fileName;
+                }
             }
-            $file = $request->file('image2');
-            $fileName = time() . '_2_' . $file->getClientOriginalName();
-            $file->move(public_path('uploads/contact'), $fileName);
-            $data['image2'] = 'uploads/contact/' . $fileName;
-        }
 
-        // Image 3
-        if ($request->hasFile('image3')) {
-            if ($contact->image3 && File::exists(public_path($contact->image3))) {
-                File::delete(public_path($contact->image3));
-            }
-            $file = $request->file('image3');
-            $fileName = time() . '_3_' . $file->getClientOriginalName();
-            $file->move(public_path('uploads/contact'), $fileName);
-            $data['image3'] = 'uploads/contact/' . $fileName;
-        }
+            // Debug için güncellenecek veriyi görelim
+            \Log::info('Contact update data:', $data);
 
-        $data['status'] = 1;
-
-        if ($contact->exists) {
             $contact->update($data);
-        } else {
-            Contact::create($data);
-        }
+            
+            // Debug için güncellenen kaydı görelim
+            \Log::info('Updated contact:', $contact->fresh()->toArray());
 
-        return redirect()->back()->with('success', 'Əlaqə məlumatları uğurla yeniləndi.');
+            return redirect()->route('pages.contact.index')
+                ->with('success', 'Əlaqə məlumatları uğurla yeniləndi.');
+        } catch (\Exception $e) {
+            // Hata durumunda log'a yazalım
+            \Log::error('Contact update error:', [
+                'message' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+
+            return redirect()->back()
+                ->with('error', 'Xəta baş verdi: ' . $e->getMessage())
+                ->withInput();
+        }
+    }
+
+    public function destroy($id)
+    {
+        $contact = Contact::findOrFail($id);
+        
+        // Delete associated images
+        $imageFields = ['number_image', 'address_image', 'email_image'];
+        foreach ($imageFields as $field) {
+            if ($contact->$field && File::exists(public_path($contact->$field))) {
+                File::delete(public_path($contact->$field));
+            }
+        }
+        
+        $contact->delete();
+
+        return redirect()->route('pages.contact.index')
+            ->with('success', 'Əlaqə məlumatları uğurla silindi.');
+    }
+
+    public function toggleStatus($id)
+    {
+        $contact = Contact::findOrFail($id);
+        $contact->status = !$contact->status;
+        $contact->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Status uğurla dəyişdirildi.'
+        ]);
     }
 }

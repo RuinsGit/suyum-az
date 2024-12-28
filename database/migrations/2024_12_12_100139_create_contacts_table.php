@@ -24,6 +24,10 @@ return new class extends Migration
             $table->string('image2')->nullable();
             $table->string('image3')->nullable();
             $table->boolean('status')->default(1);
+            $table->string('filial_name_az');
+            $table->string('filial_name_en');
+            $table->string('filial_name_ru');
+            
             $table->timestamps();
         });
     }

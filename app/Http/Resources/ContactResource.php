@@ -11,14 +11,15 @@ class ContactResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'title1' => $this->title1,
-            'title2' => $this->title2,
-            'description' => $this->description,
+            'filial_name' => $this->name,
             'number' => $this->number,
-           'image1' => $this->image1 ? url('uploads/contact/' . basename($this->image1)) : null,
-            'image2' => $this->image2 ? url('uploads/contact/' . basename($this->image2)) : null,
-            'image3' => $this->image3 ? url('uploads/contact/' . basename($this->image3)) : null,
-            'status' => (bool)$this->status
+            'email' => $this->email,
+            'address' => $this->address,
+            'number_image' => $this->number_image ? asset($this->number_image) : null,
+            'address_image' => $this->address_image ? asset($this->address_image) : null,
+            'email_image' => $this->email_image ? asset($this->email_image) : null,
+            'filial_map' => $this->filial_text,
+            'status' => (bool)$this->status,
         ];
     }
 }

@@ -72,7 +72,16 @@ Route::prefix('/')->group(function () {
     // Category routes
     Route::get('/categories', [CategoryController::class, 'index']);
     Route::get('/categories/{id}', [CategoryController::class, 'show']);
+
+    Route::prefix('contact')->group(function () {
+        Route::get('/', [ContactController::class, 'index']);
+        Route::get('/{id}', [ContactController::class, 'show']);
+    });
+
 });
+
+// Contact Routes
+
 
 
 

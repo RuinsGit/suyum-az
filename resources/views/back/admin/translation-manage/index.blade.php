@@ -44,9 +44,9 @@
                                             <a href="{{ route('pages.translation-manage.edit', $translation->id) }}" class="btn btn-primary btn-sm waves-effect waves-light">
                                                 <i class="ri-pencil-line"></i>
                                             </a>
-                                            <button type="button" class="btn btn-danger btn-sm waves-effect waves-light" onclick="deleteData({{ $translation->id }})">
+                                            <!-- <button type="button" class="btn btn-danger btn-sm waves-effect waves-light" onclick="deleteData({{ $translation->id }})">
                                                 <i class="ri-delete-bin-line"></i>
-                                            </button>
+                                            </button> -->
                                             <form id="delete-form-{{ $translation->id }}" action="{{ route('pages.translation-manage.destroy', $translation->id) }}" method="POST" class="d-none">
                                                 @csrf
                                                 @method('DELETE')

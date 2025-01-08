@@ -10,13 +10,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
-use Illuminate\Support\Facades\Artisan;
+
 
 class ProductController extends Controller
 {
     public function index()
     {
-        Artisan::call('migrate');
+      
         $categories = Category::all();
         
         $query = Product::with('category'); // Eager loading for performance

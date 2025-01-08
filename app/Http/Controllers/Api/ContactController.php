@@ -13,20 +13,20 @@ class ContactController extends Controller
     public function index(): JsonResponse
     {
         try {
-            $contact = Contact::where('status', 1)->first();
+            $contacts = Contact::where('status', 1)->get();
             
-            if (!$contact) {
+            if ($contacts->isEmpty()) {
                 return response()->json([
                     'success' => false,
                     'message' => 'Contact information not found',
-                    'data' => null
+                    'data' => []
                 ], 404);
             }
 
             return response()->json([
                 'success' => true,
                 'message' => 'Contact information retrieved successfully',
-                'data' => new ContactResource($contact)
+                'data' => ContactResource::collection($contacts)
             ], 200);
 
         } catch (\Exception $e) {

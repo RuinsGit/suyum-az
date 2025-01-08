@@ -15,17 +15,17 @@ class ProductController extends Controller
         try {
             $query = Product::where('status', 1);
 
-            // Kategori filtresi
+            
             if ($request->has('category_id')) {
                 $query->where('category_id', $request->category_id);
             }
 
-            // Alt kategori filtresi
+          
             if ($request->has('sub_category_id')) {
                 $query->where('sub_category_id', $request->sub_category_id);
             }
 
-            // Fiyat filtresi
+            
             if ($request->has('min_price')) {
                 $query->where('price', '>=', $request->min_price);
             }
@@ -33,9 +33,9 @@ class ProductController extends Controller
                 $query->where('price', '<=', $request->max_price);
             }
 
-            // Kategoriye göre filtreleme
+           
             if ($request->has('category_ids')) {
-                $query->whereIn('category_id', $request->category_ids); // Birden fazla kategori ID'si ile filtreleme
+                $query->whereIn('category_id', $request->category_ids);
             }
 
             $products = $query->with(['category', 'subCategory'])->latest()->paginate(12);

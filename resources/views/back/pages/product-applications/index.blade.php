@@ -57,7 +57,7 @@
                                                     </button>
                                                 </form>
                                             </td>
-                                            <td>{{ $application->created_at->format('d.m.Y H:i') }}</td>
+                                            <td>{{ $application->created_at->setTimezone('Asia/Baku')->format('d-m-Y H:i') }}</td>
                                             <td>
                                                 <a href="{{ route('pages.product-applications.show', $application->id) }}" 
                                                    class="btn btn-info btn-sm">

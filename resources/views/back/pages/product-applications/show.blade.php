@@ -63,7 +63,7 @@
                                 </tr>
                                 <tr>
                                     <th>Tarix</th>
-                                    <td>{{ $application->created_at->format('d.m.Y H:i') }}</td>
+                                    <td>{{ $application->created_at->setTimezone('Asia/Baku')->format('d-m-Y H:i') }}</td>
                                 </tr>
                                 @if($application->message)
                                 <tr>

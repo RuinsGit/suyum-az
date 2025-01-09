@@ -10,14 +10,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
-use Illuminate\Support\Facades\Artisan;
+
 
 
 class ProductController extends Controller
 {
     public function index()
     {
-        Artisan::call('migrate');
         $categories = Category::all();
         
         $query = Product::with('category'); // Eager loading for performance
@@ -41,7 +40,10 @@ class ProductController extends Controller
             $query->where('status', request('status'));
         }
 
-        $products = $query->latest()->paginate(10);
+        // Get per_page value from request, default to 15 if not specified
+        $perPage = request('per_page', 15);
+
+        $products = $query->latest()->paginate($perPage);
 
         // Ek para hesaplama
         foreach ($products as $product) {

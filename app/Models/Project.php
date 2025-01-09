@@ -28,11 +28,16 @@ class Project extends Model
         'description2_en',
         'description2_ru',
         'bottom_images',
-        'status'
+        'status',
+        'image_alt_az',
+        'image_alt_en',
+        'image_alt_ru',
+        'bottom_images_alt',
     ];
 
     protected $casts = [
         'bottom_images' => 'array',
+        'bottom_images_alt' => 'array',
         'status' => 'boolean'
     ];
 
@@ -59,6 +64,16 @@ class Project extends Model
     public function getDescription2Attribute()
     {
         return $this->{'description2_' . app()->getLocale()};
+    }
+
+    public function getImageAltAttribute()
+    {
+        return $this->{'image_alt_' . app()->getLocale()};
+    }
+
+    public function getBottomImagesAltAttribute()
+    {
+        return $this->{'bottom_images_alt_' . app()->getLocale()};
     }
 
     // Slug oluşturma

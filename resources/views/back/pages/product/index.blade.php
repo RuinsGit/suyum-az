@@ -20,7 +20,7 @@
         </div>
 
         <!-- Statistika Kartları -->
-        <div class="row mb-4">
+        <!-- <div class="row mb-4">
             <div class="col-md-3">
                 <div class="card mini-stats-wid">
                     <div class="card-body">
@@ -37,8 +37,8 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-3">
+            </div> -->
+            <!-- <div class="col-md-3">
                 <div class="card mini-stats-wid">
                     <div class="card-body">
                         <div class="d-flex">
@@ -55,7 +55,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
 
         <!-- Filtreler -->
         <div class="row mb-4">
@@ -69,6 +69,15 @@
                                         <input type="text" class="form-control" name="search" placeholder="Məhsul axtar..." value="{{ request('search') }}">
                                         <i class="ri-search-line search-icon"></i>
                                     </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <select class="form-select" name="per_page" id="per_page">
+                                        <option value="10" {{ request('per_page') == 10 ? 'selected' : '' }}>10 Məhsul</option>
+                                        <option value="15" {{ request('per_page') == 15 ? 'selected' : '' }}>15 Məhsul</option>
+                                        <option value="25" {{ request('per_page') == 25 ? 'selected' : '' }}>25 Məhsul</option>
+                                        <option value="50" {{ request('per_page') == 50 ? 'selected' : '' }}>50 Məhsul</option>
+                                        <option value="100" {{ request('per_page') == 100 ? 'selected' : '' }}>100 Məhsul</option>
+                                    </select>
                                 </div>
                                 <div class="col-md-3">
                                     <select class="form-select" name="category" id="category">
@@ -235,7 +244,40 @@
 
                         <!-- Səhifələmə -->
                         <div class="d-flex justify-content-end mt-3">
-                            {{ $products->appends(request()->query())->links() }}
+                            @if ($products->hasPages())
+                                <nav>
+                                    <ul class="pagination mb-0">
+                                        {{-- Previous Page Link --}}
+                                        @if ($products->onFirstPage())
+                                            <li class="page-item disabled">
+                                                <span class="page-link">«</span>
+                                            </li>
+                                        @else
+                                            <li class="page-item">
+                                                <a class="page-link" href="{{ $products->appends(request()->query())->previousPageUrl() }}" rel="prev">«</a>
+                                            </li>
+                                        @endif
+
+                                        {{-- Numbered Pages --}}
+                                        @for ($i = 1; $i <= $products->lastPage(); $i++)
+                                            <li class="page-item {{ ($products->currentPage() == $i) ? 'active' : '' }}">
+                                                <a class="page-link" href="{{ $products->appends(request()->query())->url($i) }}">{{ $i }}</a>
+                                            </li>
+                                        @endfor
+
+                                        {{-- Next Page Link --}}
+                                        @if ($products->hasMorePages())
+                                            <li class="page-item">
+                                                <a class="page-link" href="{{ $products->appends(request()->query())->nextPageUrl() }}" rel="next">»</a>
+                                            </li>
+                                        @else
+                                            <li class="page-item disabled">
+                                                <span class="page-link">»</span>
+                                            </li>
+                                        @endif
+                                    </ul>
+                                </nav>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -337,6 +379,11 @@ $(document).ready(function() {
 
    
     $('#category, select[name="status"]').change(function() {
+        $('#filterForm').submit();
+    });
+
+    // Auto-submit form when per_page changes
+    $('#per_page').change(function() {
         $('#filterForm').submit();
     });
 });

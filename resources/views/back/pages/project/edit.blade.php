@@ -41,6 +41,16 @@
                                         @error('image')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
+                                        
+                                        <!-- ALT etiketleri -->
+                                        <div class="mt-2">
+                                            <input type="text" name="image_alt_az" value="{{ old('image_alt_az', $project->image_alt_az) }}" 
+                                                   class="form-control mb-2" placeholder="Şəkil ALT (AZ)">
+                                            <input type="text" name="image_alt_en" value="{{ old('image_alt_en', $project->image_alt_en) }}" 
+                                                   class="form-control mb-2" placeholder="Image ALT (EN)">
+                                            <input type="text" name="image_alt_ru" value="{{ old('image_alt_ru', $project->image_alt_ru) }}" 
+                                                   class="form-control" placeholder="Изображение ALT (RU)">
+                                        </div>
                                     </div>
                                     <div class="col-md-6">
                                         <label class="form-label">Alt Şəkillər</label>
@@ -59,6 +69,25 @@
                                                                         data-image-key="{{ $key }}">
                                                                     <i class="fas fa-times"></i>
                                                                 </button>
+                                                                
+                                                                <!-- ALT etiketleri -->
+                                                                <div class="mt-2">
+                                                                    <input type="text" 
+                                                                           name="existing_images_alt[az][{{ $key }}]" 
+                                                                           value="{{ $project->bottom_images_alt['az'][$key] ?? '' }}" 
+                                                                           class="form-control mb-2" 
+                                                                           placeholder="Alt şəkil ALT (AZ)">
+                                                                    <input type="text" 
+                                                                           name="existing_images_alt[en][{{ $key }}]" 
+                                                                           value="{{ $project->bottom_images_alt['en'][$key] ?? '' }}" 
+                                                                           class="form-control mb-2" 
+                                                                           placeholder="Alt image ALT (EN)">
+                                                                    <input type="text" 
+                                                                           name="existing_images_alt[ru][{{ $key }}]" 
+                                                                           value="{{ $project->bottom_images_alt['ru'][$key] ?? '' }}" 
+                                                                           class="form-control" 
+                                                                           placeholder="Alt изображение ALT (RU)">
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     @endforeach
@@ -71,6 +100,12 @@
                                             <div class="bottom-image-row mb-2">
                                                 <div class="input-group">
                                                     <input type="file" name="bottom_images[]" class="form-control">
+                                                    <!-- ALT etiketleri için input'lar -->
+                                                    <div class="mt-2 w-100">
+                                                        <input type="text" name="bottom_images_alt[az][]" class="form-control mb-2" placeholder="Alt şəkil ALT (AZ)">
+                                                        <input type="text" name="bottom_images_alt[en][]" class="form-control mb-2" placeholder="Alt image ALT (EN)">
+                                                        <input type="text" name="bottom_images_alt[ru][]" class="form-control mb-2" placeholder="Alt изображение ALT (RU)">
+                                                    </div>
                                                     <button type="button" class="btn btn-danger remove-image" style="display: none;">
                                                         <i class="fas fa-trash"></i>
                                                     </button>
@@ -300,6 +335,11 @@
                 <div class="bottom-image-row mb-2">
                     <div class="input-group">
                         <input type="file" name="bottom_images[]" class="form-control">
+                        <div class="mt-2 w-100">
+                            <input type="text" name="bottom_images_alt[az][]" class="form-control mb-2" placeholder="Alt şəkil ALT (AZ)">
+                            <input type="text" name="bottom_images_alt[en][]" class="form-control mb-2" placeholder="Alt image ALT (EN)">
+                            <input type="text" name="bottom_images_alt[ru][]" class="form-control mb-2" placeholder="Alt изображение ALT (RU)">
+                        </div>
                         <button type="button" class="btn btn-danger remove-image">
                             <i class="fas fa-trash"></i>
                         </button>

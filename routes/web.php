@@ -16,7 +16,7 @@ use App\Http\Controllers\Admin\ProjectController;
 use App\Http\Controllers\Admin\TranslationController;
 use App\Http\Controllers\Admin\SocialMediaController;
 use App\Http\Controllers\Admin\TranslationManageController;
-
+use App\Http\Controllers\Admin\ProductApplicationController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -109,6 +109,10 @@ Route::prefix('admin')->group(function () {
             Route::get('translation-manage/{translation}/edit', [TranslationManageController::class, 'edit'])->name('translation-manage.edit');
             Route::put('translation-manage/{translation}', [TranslationManageController::class, 'update'])->name('translation-manage.update');
             Route::delete('translation-manage/{translation}', [TranslationManageController::class, 'destroy'])->name('translation-manage.destroy');
+            Route::resource('product-applications', ProductApplicationController::class)
+                ->only(['index', 'show', 'destroy']);
+            Route::post('product-applications/{id}/toggle-status', [ProductApplicationController::class, 'toggleStatus'])
+                ->name('product-applications.toggle-status');
         });
     });
 });

@@ -55,16 +55,25 @@
                                 <span>Əlaqə Məlumatları</span>
                             </a>
                         </li>
+
                         <li>
-    <a href="{{ route('pages.contact-form.index') }}" class="waves-effect">
+                            <a href="{{ route('pages.product-applications.index') }}">
+                                <i class="ri-shopping-cart-line"></i>
+                                <span>Məhsul Müraciətləri</span>
+                            </a>
+                        </li>
+
+
+                        <li>
+                            <a href="{{ route('pages.contact-form.index') }}" class="waves-effect">
                                 <i class="ri-message-2-line"></i>
                                 <span>Müraciətlər</span>
-                                @php
+                                        @php
                                     $unreadCount = \App\Models\ContactForm::where('status', 0)->count();
                                 @endphp
                                 @if($unreadCount > 0)
-            <span class="badge rounded-pill bg-danger float-end">{{ $unreadCount }}</span>
-        @endif
+                                    <span class="badge rounded-pill bg-danger float-end">{{ $unreadCount }}</span>
+                                @endif
                             </a>
                         </li>
                     </ul>

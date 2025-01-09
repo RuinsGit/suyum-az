@@ -436,6 +436,16 @@
                                         @error('main_image')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
+                                        
+                                        <!-- ALT etiketleri -->
+                                        <div class="mt-2">
+                                            <input type="text" name="image_alt_az" value="{{ old('image_alt_az', $product->image_alt_az) }}" 
+                                                   class="form-control mb-2" placeholder="Şəkil ALT (AZ)">
+                                            <input type="text" name="image_alt_en" value="{{ old('image_alt_en', $product->image_alt_en) }}" 
+                                                   class="form-control mb-2" placeholder="Image ALT (EN)">
+                                            <input type="text" name="image_alt_ru" value="{{ old('image_alt_ru', $product->image_alt_ru) }}" 
+                                                   class="form-control" placeholder="Изображение ALT (RU)">
+                                        </div>
                                     </div>
                                     <div class="col-md-4 mb-3">
                                         <label class="form-label">Kuryer şəkli</label>

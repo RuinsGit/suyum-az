@@ -48,6 +48,9 @@ class Product extends Model
         'description_ru',
         'discount',
         'is_new',
+        'image_alt_az',
+        'image_alt_en',
+        'image_alt_ru',
     ];
 
     public function getNameAttribute()
@@ -90,7 +93,10 @@ class Product extends Model
         return $this->{'description_' . app()->getLocale()};
     }
 
-    
+    public function getImageAltAttribute()
+    {
+        return $this->{'image_alt_' . app()->getLocale()};
+    }
 
     protected $casts = [
         'price' => 'decimal:2',

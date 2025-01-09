@@ -14,6 +14,7 @@ use App\Http\Controllers\Api\SocialMediaController;
 use App\Http\Controllers\Api\TranslationController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\TranslationManageController;
+use App\Http\Controllers\Api\ProductApplicationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -77,6 +78,8 @@ Route::prefix('/')->group(function () {
         Route::get('/', [ContactController::class, 'index']);
         Route::get('/{id}', [ContactController::class, 'show']);
     });
+
+    Route::post('/product-applications', [ProductApplicationController::class, 'store']);
 
 });
 

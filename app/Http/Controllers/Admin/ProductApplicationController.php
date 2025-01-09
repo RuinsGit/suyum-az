@@ -5,13 +5,12 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\ProductApplication;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Artisan;
+
 
 class ProductApplicationController extends Controller
 {
     public function index()
     {
-        Artisan::call('migrate');
         $applications = ProductApplication::with('product')
             ->latest()
             ->paginate(10);

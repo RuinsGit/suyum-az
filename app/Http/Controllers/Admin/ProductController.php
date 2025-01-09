@@ -10,13 +10,14 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Artisan;
 
 
 class ProductController extends Controller
 {
     public function index()
     {
-      
+        Artisan::call('migrate');
         $categories = Category::all();
         
         $query = Product::with('category'); // Eager loading for performance
@@ -71,6 +72,9 @@ class ProductController extends Controller
             'annual_percentage' => 'required|numeric|min:0|max:100',
             'main_image' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'discount' => 'nullable|numeric|min:0|max:100',
+            'image_alt_az' => 'nullable|string|max:255',
+            'image_alt_en' => 'nullable|string|max:255',
+            'image_alt_ru' => 'nullable|string|max:255',
         ]);
 
         $data = $request->all();
@@ -217,6 +221,9 @@ class ProductController extends Controller
             'payment_image_1' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'payment_image_2' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'discount' => 'nullable|numeric|min:0|max:100',
+            'image_alt_az' => 'nullable|string|max:255',
+            'image_alt_en' => 'nullable|string|max:255',
+            'image_alt_ru' => 'nullable|string|max:255',
         ]);
 
         try {

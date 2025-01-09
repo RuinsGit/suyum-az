@@ -108,18 +108,39 @@
 
                                 <div class="row mb-3">
                                     <div class="col-md-6">
-                                        <label class="form-label">Üst Şəkil</label>
+                                        <label class="form-label">Əsas şəkil</label>
                                         <input type="file" name="image" class="form-control @error('image') is-invalid @enderror">
                                         @error('image')
-                                        <div class="invalid-feedback">{{ $message }}</div>
+                                            <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
+                                        
+                                        <!-- Ana resim ALT etiketleri -->
+                                        <div class="mt-2">
+                                            <input type="text" name="image_alt_az" value="{{ old('image_alt_az') }}" 
+                                                   class="form-control mb-2" placeholder="Şəkil ALT (AZ)">
+                                            <input type="text" name="image_alt_en" value="{{ old('image_alt_en') }}" 
+                                                   class="form-control mb-2" placeholder="Image ALT (EN)">
+                                            <input type="text" name="image_alt_ru" value="{{ old('image_alt_ru') }}" 
+                                                   class="form-control" placeholder="Изображение ALT (RU)">
+                                        </div>
                                     </div>
+
                                     <div class="col-md-6">
                                         <label class="form-label">Alt Şəkil</label>
                                         <input type="file" name="bottom_image" class="form-control @error('bottom_image') is-invalid @enderror">
                                         @error('bottom_image')
-                                        <div class="invalid-feedback">{{ $message }}</div>
+                                            <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
+                                        
+                                        <!-- Alt resim ALT etiketleri -->
+                                        <div class="mt-2">
+                                            <input type="text" name="bottom_image_alt_az" value="{{ old('bottom_image_alt_az') }}" 
+                                                   class="form-control mb-2" placeholder="Alt şəkil ALT (AZ)">
+                                            <input type="text" name="bottom_image_alt_en" value="{{ old('bottom_image_alt_en') }}" 
+                                                   class="form-control mb-2" placeholder="Bottom image ALT (EN)">
+                                            <input type="text" name="bottom_image_alt_ru" value="{{ old('bottom_image_alt_ru') }}" 
+                                                   class="form-control" placeholder="Нижнее изображение ALT (RU)">
+                                        </div>
                                     </div>
                                 </div>
 

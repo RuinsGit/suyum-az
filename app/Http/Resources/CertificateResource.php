@@ -14,6 +14,7 @@ class CertificateResource extends JsonResource
             'text' => $this->text,
             'image' => $this->image ? asset($this->image) : null,
             'status' => (bool)$this->status,
+            'image_alt' => $this->image_alt,
         ];
     }
 }

@@ -84,12 +84,24 @@
                                     </div>
                                 </div>
 
-                                <div class="mb-3">
-                                    <label class="form-label">Şəkil</label>
-                                    <input type="file" name="image" class="form-control @error('image') is-invalid @enderror">
-                                    @error('image')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label" for="image">Şəkil</label>
+                                        <input type="file" name="image" id="image" class="form-control @error('image') is-invalid @enderror">
+                                        @error('image')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                        
+                                        <!-- ALT etiketleri -->
+                                        <div class="mt-2">
+                                            <input type="text" name="image_alt_az" value="{{ old('image_alt_az') }}" 
+                                                   class="form-control mb-2" placeholder="Şəkil ALT (AZ)">
+                                            <input type="text" name="image_alt_en" value="{{ old('image_alt_en') }}" 
+                                                   class="form-control mb-2" placeholder="Image ALT (EN)">
+                                            <input type="text" name="image_alt_ru" value="{{ old('image_alt_ru') }}" 
+                                                   class="form-control" placeholder="Изображение ALT (RU)">
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div class="row">

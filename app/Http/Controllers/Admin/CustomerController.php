@@ -24,7 +24,10 @@ class CustomerController extends Controller
     {
         $request->validate([
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
-            'link' => 'nullable|url'
+            'link' => 'nullable|url',
+            'image_alt_az' => 'nullable|string|max:255',
+            'image_alt_en' => 'nullable|string|max:255',
+            'image_alt_ru' => 'nullable|string|max:255',
         ]);
 
         $data = $request->all();
@@ -63,7 +66,10 @@ class CustomerController extends Controller
     {
         $request->validate([
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
-            'link' => 'nullable|url'
+            'link' => 'nullable|url',
+            'image_alt_az' => 'nullable|string|max:255',
+            'image_alt_en' => 'nullable|string|max:255',
+            'image_alt_ru' => 'nullable|string|max:255',
         ]);
 
         $data = $request->all();

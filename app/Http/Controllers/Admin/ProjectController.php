@@ -6,14 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Artisan;
+
 
 
 class ProjectController extends Controller
 {
     public function index()
     {
-        Artisan::call('migrate');
         $projects = Project::latest()->paginate(10);
         return view('back.pages.project.index', compact('projects'));
     }

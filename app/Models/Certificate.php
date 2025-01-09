@@ -7,11 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 class Certificate extends Model
 {
     protected $fillable = [
-        'image',
         'text_az',
         'text_en',
         'text_ru',
-        'status'
+        'image',
+        'status',
+        'image_alt_az',
+        'image_alt_en',
+        'image_alt_ru'
     ];
 
     protected $casts = [
@@ -21,5 +24,10 @@ class Certificate extends Model
     public function getTextAttribute()
     {
         return $this->{'text_' . app()->getLocale()};
+    }
+
+    public function getImageAltAttribute()
+    {
+        return $this->{'image_alt_' . app()->getLocale()};
     }
 }

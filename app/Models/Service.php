@@ -15,7 +15,13 @@ class Service extends Model
         'description_ru',
         'image',
         'bottom_image',
-        'status'
+        'status',
+        'image_alt_az',
+        'image_alt_en',
+        'image_alt_ru',
+        'bottom_image_alt_az',
+        'bottom_image_alt_en',
+        'bottom_image_alt_ru'
     ];
 
     protected $casts = [
@@ -31,4 +37,15 @@ class Service extends Model
     {
         return $this->{'description_' . app()->getLocale()};
     }
+
+    public function getImageAltAttribute()
+    {
+        return $this->{'image_alt_' . app()->getLocale()};
+    }
+
+    public function getBottomImageAltAttribute()
+    {
+        return $this->{'bottom_image_alt_' . app()->getLocale()};
+    }
+            
 }

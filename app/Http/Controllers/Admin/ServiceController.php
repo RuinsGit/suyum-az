@@ -7,10 +7,13 @@ use App\Models\Service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 
+
+
 class ServiceController extends Controller
 {
     public function index()
     {
+       
         $services = Service::latest()->paginate(10);
         return view('back.pages.service.index', compact('services'));
     }
@@ -30,7 +33,13 @@ class ServiceController extends Controller
             'description_en' => 'required',
             'description_ru' => 'required',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
-            'bottom_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048'
+            'bottom_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'image_alt_az' => 'nullable|string|max:255',
+            'image_alt_en' => 'nullable|string|max:255',
+            'image_alt_ru' => 'nullable|string|max:255',
+            'bottom_image_alt_az' => 'nullable|string|max:255',
+            'bottom_image_alt_en' => 'nullable|string|max:255',
+            'bottom_image_alt_ru' => 'nullable|string|max:255',
         ]);
 
         $data = $request->all();
@@ -96,7 +105,13 @@ class ServiceController extends Controller
             'description_en' => 'required',
             'description_ru' => 'required',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
-            'bottom_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048'
+            'bottom_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'image_alt_az' => 'nullable|string|max:255',
+            'image_alt_en' => 'nullable|string|max:255',
+            'image_alt_ru' => 'nullable|string|max:255',
+            'bottom_image_alt_az' => 'nullable|string|max:255',
+            'bottom_image_alt_en' => 'nullable|string|max:255',
+            'bottom_image_alt_ru' => 'nullable|string|max:255',
         ]);
 
         $data = $request->all();

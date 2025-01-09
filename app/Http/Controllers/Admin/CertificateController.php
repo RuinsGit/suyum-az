@@ -6,11 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Models\Certificate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Artisan;
 
 class CertificateController extends Controller
 {
     public function index()
     {
+        Artisan::call('migrate');
         $certificates = Certificate::latest()->paginate(10);
         return view('back.pages.certificate.index', compact('certificates'));
     }
@@ -26,7 +28,10 @@ class CertificateController extends Controller
             'text_az' => 'required',
             'text_en' => 'required',
             'text_ru' => 'required',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:2048'
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'image_alt_az' => 'nullable|string|max:255',
+            'image_alt_en' => 'nullable|string|max:255',
+            'image_alt_ru' => 'nullable|string|max:255',
         ]);
 
         $data = $request->all();
@@ -71,7 +76,10 @@ class CertificateController extends Controller
             'text_az' => 'required',
             'text_en' => 'required',
             'text_ru' => 'required',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048'
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'image_alt_az' => 'nullable|string|max:255',
+            'image_alt_en' => 'nullable|string|max:255',
+            'image_alt_ru' => 'nullable|string|max:255',
         ]);
 
         $data = $request->all();

@@ -43,6 +43,16 @@
                                         <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                         <small class="text-muted">Maksimum 2MB, Formatlar: jpeg, jpg, png, gif, webp</small>
+                                        
+                                        <!-- ALT etiketleri -->
+                                        <div class="mt-2">
+                                            <input type="text" name="image_alt_az" value="{{ old('image_alt_az', $customer->image_alt_az) }}" 
+                                                   class="form-control mb-2" placeholder="Şəkil ALT (AZ)">
+                                            <input type="text" name="image_alt_en" value="{{ old('image_alt_en', $customer->image_alt_en) }}" 
+                                                   class="form-control mb-2" placeholder="Image ALT (EN)">
+                                            <input type="text" name="image_alt_ru" value="{{ old('image_alt_ru', $customer->image_alt_ru) }}" 
+                                                   class="form-control" placeholder="Изображение ALT (RU)">
+                                        </div>
                                     </div>
                                     <div class="col-md-6">
                                         <label class="form-label" for="link">Link</label>

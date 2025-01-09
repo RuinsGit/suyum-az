@@ -14,7 +14,7 @@ class CustomerResource extends JsonResource
             'image' => $this->image ? asset($this->image) : null,
             'link' => $this->link,
             'status' => (bool)$this->status,
-           
+            'image_alt' => $this->image_alt,
         ];
     }
 }

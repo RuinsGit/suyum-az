@@ -85,17 +85,30 @@
                                     </div>
                                 </div>
 
-                                <div class="mb-3">
-                                    <label class="form-label">Şəkil</label>
-                                    @if($certificate->image)
-                                        <div class="mb-2">
-                                            <img src="{{ asset($certificate->image) }}" alt="Current Image" class="img-thumbnail" style="max-height: 150px">
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label" for="image">Şəkil</label>
+                                        @if($certificate->image)
+                                            <div class="mb-2">
+                                                <img src="{{ asset($certificate->image) }}" alt="Current Image" 
+                                                     class="img-thumbnail" style="max-height: 150px">
+                                            </div>
+                                        @endif
+                                        <input type="file" name="image" id="image" class="form-control @error('image') is-invalid @enderror">
+                                        @error('image')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                        
+                                        <!-- ALT etiketleri -->
+                                        <div class="mt-2">
+                                            <input type="text" name="image_alt_az" value="{{ old('image_alt_az', $certificate->image_alt_az) }}" 
+                                                   class="form-control mb-2" placeholder="Şəkil ALT (AZ)">
+                                            <input type="text" name="image_alt_en" value="{{ old('image_alt_en', $certificate->image_alt_en) }}" 
+                                                   class="form-control mb-2" placeholder="Image ALT (EN)">
+                                            <input type="text" name="image_alt_ru" value="{{ old('image_alt_ru', $certificate->image_alt_ru) }}" 
+                                                   class="form-control" placeholder="Изображение ALT (RU)">
                                         </div>
-                                    @endif
-                                    <input type="file" name="image" class="form-control @error('image') is-invalid @enderror">
-                                    @error('image')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
+                                    </div>
                                 </div>
 
                                 <div class="row">

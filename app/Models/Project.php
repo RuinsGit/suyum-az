@@ -8,7 +8,6 @@ use Illuminate\Support\Str;
 class Project extends Model
 {
     protected $fillable = [
-        'image',
         'name_az',
         'name_en',
         'name_ru',
@@ -27,18 +26,19 @@ class Project extends Model
         'description2_az',
         'description2_en',
         'description2_ru',
+        'image',
         'bottom_images',
+        'bottom_images_alt',
         'status',
         'image_alt_az',
         'image_alt_en',
-        'image_alt_ru',
-        'bottom_images_alt',
+        'image_alt_ru'
     ];
 
     protected $casts = [
+        'status' => 'boolean',
         'bottom_images' => 'array',
-        'bottom_images_alt' => 'array',
-        'status' => 'boolean'
+        'bottom_images_alt' => 'array'
     ];
 
     public function getNameAttribute()
@@ -71,9 +71,24 @@ class Project extends Model
         return $this->{'image_alt_' . app()->getLocale()};
     }
 
-    public function getBottomImagesAltAttribute()
+    public function getBottomImagesAltAttribute($value)
     {
-        return $this->{'bottom_images_alt_' . app()->getLocale()};
+        $defaultValue = ['az' => [], 'en' => [], 'ru' => []];
+        $currentLocale = app()->getLocale();
+        
+        if (is_null($value)) {
+            return $defaultValue[$currentLocale];
+        }
+        
+        $decodedValue = is_array($value) ? $value : json_decode($value, true);
+        return $decodedValue[$currentLocale] ?? [];
+    }
+
+    protected function setBottomImagesAltAttribute($value)
+    {
+        $this->attributes['bottom_images_alt'] = is_array($value) ? 
+            json_encode($value) : 
+            json_encode(['az' => [], 'en' => [], 'ru' => []]);
     }
 
     // Slug oluşturma

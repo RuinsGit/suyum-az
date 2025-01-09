@@ -61,15 +61,11 @@ class ProjectController extends Controller
             $data['image'] = $destinationPath . '/' . $fileName;
         }
 
-        // Alt resimleri işleme
-        if ($request->hasFile('bottom_images')) {
-            $bottomImages = [];
-            $bottomImagesAlt = [
-                'az' => [],
-                'en' => [],
-                'ru' => []
-            ];
+        // Alt resimler ve ALT etiketleri
+        $bottomImages = [];
+        $bottomImagesAlt = ['az' => [], 'en' => [], 'ru' => []];
 
+        if ($request->hasFile('bottom_images')) {
             foreach ($request->file('bottom_images') as $key => $image) {
                 $destinationPath = 'uploads/projects/gallery';
                 $fileName = time() . '_' . $image->getClientOriginalName();
@@ -77,14 +73,14 @@ class ProjectController extends Controller
                 $bottomImages[] = $destinationPath . '/' . $fileName;
 
                 // ALT etiketlerini kaydet
-                $bottomImagesAlt['az'][] = $request->input('bottom_images_alt.az.' . $key);
-                $bottomImagesAlt['en'][] = $request->input('bottom_images_alt.en.' . $key);
-                $bottomImagesAlt['ru'][] = $request->input('bottom_images_alt.ru.' . $key);
+                $bottomImagesAlt['az'][] = $request->input("bottom_images_alt.az.{$key}") ?? '';
+                $bottomImagesAlt['en'][] = $request->input("bottom_images_alt.en.{$key}") ?? '';
+                $bottomImagesAlt['ru'][] = $request->input("bottom_images_alt.ru.{$key}") ?? '';
             }
-
-            $data['bottom_images'] = $bottomImages;
-            $data['bottom_images_alt'] = $bottomImagesAlt;
         }
+
+        $data['bottom_images'] = $bottomImages;
+        $data['bottom_images_alt'] = $bottomImagesAlt;
 
         Project::create($data);
 
@@ -144,20 +140,11 @@ class ProjectController extends Controller
             $data['image'] = $destinationPath . '/' . $fileName;
         }
 
-        // Alt resimleri ve ALT etiketlerini işleme
+        // Mevcut alt resimler ve ALT etiketleri
         $bottomImages = $project->bottom_images ?? [];
-        $bottomImagesAlt = $project->bottom_images_alt ?? ['az' => [], 'en' => [], 'ru' => []];
+        $bottomImagesAlt = $project->bottom_images_alt;
 
-        // Mevcut resimlerin ALT etiketlerini güncelle
-        if ($request->has('existing_images_alt')) {
-            foreach (['az', 'en', 'ru'] as $lang) {
-                foreach ($request->existing_images_alt[$lang] ?? [] as $key => $alt) {
-                    $bottomImagesAlt[$lang][$key] = $alt;
-                }
-            }
-        }
-
-        // Yeni resimleri ve ALT etiketlerini ekle
+        // Yeni yüklenen resimler
         if ($request->hasFile('bottom_images')) {
             foreach ($request->file('bottom_images') as $key => $image) {
                 $destinationPath = 'uploads/projects/gallery';
@@ -166,32 +153,23 @@ class ProjectController extends Controller
                 $newKey = count($bottomImages);
                 $bottomImages[] = $destinationPath . '/' . $fileName;
 
-                // Yeni ALT etiketlerini ekle
-                $bottomImagesAlt['az'][$newKey] = $request->input('bottom_images_alt.az.' . $key);
-                $bottomImagesAlt['en'][$newKey] = $request->input('bottom_images_alt.en.' . $key);
-                $bottomImagesAlt['ru'][$newKey] = $request->input('bottom_images_alt.ru.' . $key);
+                // Yeni resimler için ALT etiketleri
+                $bottomImagesAlt['az'][$newKey] = $request->input("bottom_images_alt.az.{$key}") ?? '';
+                $bottomImagesAlt['en'][$newKey] = $request->input("bottom_images_alt.en.{$key}") ?? '';
+                $bottomImagesAlt['ru'][$newKey] = $request->input("bottom_images_alt.ru.{$key}") ?? '';
             }
         }
 
-        // Silinecek resimleri ve ALT etiketlerini kaldır
-        if ($request->has('remove_images')) {
-            foreach ($request->remove_images as $key) {
-                $imageToRemove = $bottomImages[$key];
-                if (File::exists(public_path($imageToRemove))) {
-                    File::delete(public_path($imageToRemove));
-                }
-                unset($bottomImages[$key]);
-                unset($bottomImagesAlt['az'][$key]);
-                unset($bottomImagesAlt['en'][$key]);
-                unset($bottomImagesAlt['ru'][$key]);
+        // Mevcut resimlerin ALT etiketlerini güncelle
+        if ($request->has('bottom_images_alt')) {
+            foreach ($bottomImages as $key => $image) {
+                $bottomImagesAlt['az'][$key] = $request->input("bottom_images_alt.az.{$key}", $bottomImagesAlt['az'][$key] ?? '');
+                $bottomImagesAlt['en'][$key] = $request->input("bottom_images_alt.en.{$key}", $bottomImagesAlt['en'][$key] ?? '');
+                $bottomImagesAlt['ru'][$key] = $request->input("bottom_images_alt.ru.{$key}", $bottomImagesAlt['ru'][$key] ?? '');
             }
-            $bottomImages = array_values($bottomImages);
-            $bottomImagesAlt['az'] = array_values($bottomImagesAlt['az']);
-            $bottomImagesAlt['en'] = array_values($bottomImagesAlt['en']);
-            $bottomImagesAlt['ru'] = array_values($bottomImagesAlt['ru']);
         }
 
-        $data['bottom_images'] = $bottomImages;
+        $data['bottom_images'] = array_values($bottomImages);
         $data['bottom_images_alt'] = $bottomImagesAlt;
 
         $project->update($data);

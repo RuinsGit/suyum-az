@@ -73,17 +73,17 @@
                                                                 <!-- ALT etiketleri -->
                                                                 <div class="mt-2">
                                                                     <input type="text" 
-                                                                           name="existing_images_alt[az][{{ $key }}]" 
+                                                                           name="bottom_images_alt[az][{{ $key }}]" 
                                                                            value="{{ $project->bottom_images_alt['az'][$key] ?? '' }}" 
                                                                            class="form-control mb-2" 
                                                                            placeholder="Alt şəkil ALT (AZ)">
                                                                     <input type="text" 
-                                                                           name="existing_images_alt[en][{{ $key }}]" 
+                                                                           name="bottom_images_alt[en][{{ $key }}]" 
                                                                            value="{{ $project->bottom_images_alt['en'][$key] ?? '' }}" 
                                                                            class="form-control mb-2" 
                                                                            placeholder="Alt image ALT (EN)">
                                                                     <input type="text" 
-                                                                           name="existing_images_alt[ru][{{ $key }}]" 
+                                                                           name="bottom_images_alt[ru][{{ $key }}]" 
                                                                            value="{{ $project->bottom_images_alt['ru'][$key] ?? '' }}" 
                                                                            class="form-control" 
                                                                            placeholder="Alt изображение ALT (RU)">

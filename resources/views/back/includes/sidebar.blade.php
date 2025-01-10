@@ -80,6 +80,13 @@
                 </li>
 
                 <li>
+                    <a href="{{ route('pages.seo.index') }}" class="waves-effect">
+                        <i class="ri-search-line"></i>
+                        <span>SEO</span>
+                    </a>
+                </li>
+
+                <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="ri-list-check"></i>
                         <span>Kateqoriyalar</span>

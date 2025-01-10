@@ -20,4 +20,14 @@ class Seo extends Model
     protected $casts = [
         'status' => 'boolean'
     ];
+
+    public function getMetaTitleAttribute()
+    {
+        return $this->{'meta_title_' . app()->getLocale()};
+    }
+
+    public function getMetaDescriptionAttribute()
+    {
+        return $this->{'meta_description_' . app()->getLocale()};
+    }
 }

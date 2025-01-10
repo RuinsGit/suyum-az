@@ -15,6 +15,7 @@ use App\Http\Controllers\Api\TranslationController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\TranslationManageController;
 use App\Http\Controllers\Api\ProductApplicationController;
+use App\Http\Controllers\Api\SeoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,6 +43,8 @@ Route::prefix('/')->group(function () {
     
     // About route
     Route::get('/about', [AboutController::class, 'index']);
+
+    
     
     // Certificate routes
     Route::get('/certificates', [CertificateController::class, 'index']);
@@ -80,6 +83,9 @@ Route::prefix('/')->group(function () {
     });
 
     Route::post('/product-applications', [ProductApplicationController::class, 'store']);
+
+    Route::get('seo', [SeoController::class, 'index']);
+    Route::get('seo/{key}', [SeoController::class, 'show']);
 
 });
 

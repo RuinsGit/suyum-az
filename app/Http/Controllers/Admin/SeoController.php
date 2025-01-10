@@ -6,10 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Models\Seo;
 use Illuminate\Http\Request;
 
+
 class SeoController extends Controller
 {
     public function index()
     {
+        
         $seos = Seo::all();
         return view('back.admin.seo.index', compact('seos'));
     }

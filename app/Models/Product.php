@@ -104,6 +104,16 @@ class Product extends Model
         return $this->{'image_alt_' . app()->getLocale()};
     }
 
+    public function getMainImageMetaTitleAttribute()
+    {
+        return $this->{'main_image_meta_title_' . app()->getLocale()};
+    }
+
+    public function getMainImageMetaDescriptionAttribute()
+    {
+        return $this->{'main_image_meta_description_' . app()->getLocale()};
+    }   
+
     protected $casts = [
         'price' => 'decimal:2',
         'monthly_percentage' => 'decimal:2',

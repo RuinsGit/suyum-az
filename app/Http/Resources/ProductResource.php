@@ -35,6 +35,8 @@ class ProductResource extends JsonResource
             'installation_price' => number_format((float)$this->installation_price, 2, '.', ''),
             'main_image' => $this->main_image ? asset($this->main_image) : null,
             'main_image_alt' => $this->image_alt,
+            'main_image_meta_title' => $this->main_image_meta_title,
+            'main_image_meta_description' => $this->main_image_meta_description,
             'courier_image' => $this->courier_image ? asset($this->courier_image) : null,
             'installation_image' => $this->installation_image ? asset($this->installation_image) : null,
             'payment_image_1' => $this->payment_image_1 ? asset($this->payment_image_1) : null,

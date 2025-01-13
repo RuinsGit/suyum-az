@@ -115,6 +115,18 @@
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
                                             </div>
+                                            <div class="col-md-12 mb-3">
+                                                <label class="form-label">Əsas şəkil Meta Title (AZ)</label>
+                                                <input type="text" name="main_image_meta_title_az" 
+                                                       value="{{ old('main_image_meta_title_az') }}" 
+                                                       class="form-control">
+                                            </div>
+                                            <div class="col-md-12 mb-3">
+                                                <label class="form-label">Əsas şəkil Meta Description (AZ)</label>
+                                                <textarea name="main_image_meta_description_az" 
+                                                          class="form-control" 
+                                                          rows="3">{{ old('main_image_meta_description_az') }}</textarea>
+                                            </div>
                                         </div>
                                     </div>
 
@@ -162,6 +174,18 @@
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
                                             </div>
+                                            <div class="col-md-12 mb-3">
+                                                <label class="form-label">Main Image Meta Title (EN)</label>
+                                                <input type="text" name="main_image_meta_title_en" 
+                                                       value="{{ old('main_image_meta_title_en') }}" 
+                                                       class="form-control">
+                                            </div>
+                                            <div class="col-md-12 mb-3">
+                                                <label class="form-label">Main Image Meta Description (EN)</label>
+                                                <textarea name="main_image_meta_description_en" 
+                                                          class="form-control" 
+                                                          rows="3">{{ old('main_image_meta_description_en') }}</textarea>
+                                            </div>
                                         </div>
                                     </div>
 
@@ -208,6 +232,18 @@
                                                 @error('description_ru')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
+                                            </div>
+                                            <div class="col-md-12 mb-3">
+                                                <label class="form-label">Мета-заголовок главного изображения (RU)</label>
+                                                <input type="text" name="main_image_meta_title_ru" 
+                                                       value="{{ old('main_image_meta_title_ru') }}" 
+                                                       class="form-control">
+                                            </div>
+                                            <div class="col-md-12 mb-3">
+                                                <label class="form-label">Мета-описание главного изображения (RU)</label>
+                                                <textarea name="main_image_meta_description_ru" 
+                                                          class="form-control" 
+                                                          rows="3">{{ old('main_image_meta_description_ru') }}</textarea>
                                             </div>
                                         </div>
                                     </div>

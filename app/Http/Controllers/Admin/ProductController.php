@@ -13,10 +13,12 @@ use Intervention\Image\Facades\Image;
 
 
 
+
 class ProductController extends Controller
 {
     public function index()
     {
+       
         $categories = Category::all();
         
         $query = Product::with('category'); // Eager loading for performance
@@ -77,6 +79,12 @@ class ProductController extends Controller
             'image_alt_az' => 'nullable|string|max:255',
             'image_alt_en' => 'nullable|string|max:255',
             'image_alt_ru' => 'nullable|string|max:255',
+            'main_image_meta_title_az' => 'nullable|string|max:255',
+            'main_image_meta_title_en' => 'nullable|string|max:255',
+            'main_image_meta_title_ru' => 'nullable|string|max:255',
+            'main_image_meta_description_az' => 'nullable|string',
+            'main_image_meta_description_en' => 'nullable|string',
+            'main_image_meta_description_ru' => 'nullable|string',
         ]);
 
         $data = $request->all();
@@ -226,6 +234,12 @@ class ProductController extends Controller
             'image_alt_az' => 'nullable|string|max:255',
             'image_alt_en' => 'nullable|string|max:255',
             'image_alt_ru' => 'nullable|string|max:255',
+            'main_image_meta_title_az' => 'nullable|string|max:255',
+            'main_image_meta_title_en' => 'nullable|string|max:255',
+            'main_image_meta_title_ru' => 'nullable|string|max:255',
+            'main_image_meta_description_az' => 'nullable|string',
+            'main_image_meta_description_en' => 'nullable|string',
+            'main_image_meta_description_ru' => 'nullable|string',
         ]);
 
         try {

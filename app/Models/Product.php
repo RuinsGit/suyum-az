@@ -51,6 +51,12 @@ class Product extends Model
         'image_alt_az',
         'image_alt_en',
         'image_alt_ru',
+        'main_image_meta_title_az',
+        'main_image_meta_title_en',
+        'main_image_meta_title_ru',
+        'main_image_meta_description_az',
+        'main_image_meta_description_en',
+        'main_image_meta_description_ru',
     ];
 
     public function getNameAttribute()

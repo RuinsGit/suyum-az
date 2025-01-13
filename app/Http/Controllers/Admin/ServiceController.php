@@ -9,11 +9,12 @@ use Illuminate\Support\Facades\File;
 
 
 
+
 class ServiceController extends Controller
 {
     public function index()
     {
-       
+        
         $services = Service::latest()->paginate(10);
         return view('back.pages.service.index', compact('services'));
     }
@@ -40,6 +41,12 @@ class ServiceController extends Controller
             'bottom_image_alt_az' => 'nullable|string|max:255',
             'bottom_image_alt_en' => 'nullable|string|max:255',
             'bottom_image_alt_ru' => 'nullable|string|max:255',
+            'meta_title_az' => 'nullable|string|max:255',
+            'meta_title_en' => 'nullable|string|max:255',
+            'meta_title_ru' => 'nullable|string|max:255',
+            'meta_description_az' => 'nullable|string',
+            'meta_description_en' => 'nullable|string',
+            'meta_description_ru' => 'nullable|string',
         ]);
 
         $data = $request->all();
@@ -84,6 +91,14 @@ class ServiceController extends Controller
             }
         }
 
+        // Yeni meta alanlarını ekle
+        $data['meta_title_az'] = $request->input('meta_title_az');
+        $data['meta_title_en'] = $request->input('meta_title_en');
+        $data['meta_title_ru'] = $request->input('meta_title_ru');
+        $data['meta_description_az'] = $request->input('meta_description_az');
+        $data['meta_description_en'] = $request->input('meta_description_en');
+        $data['meta_description_ru'] = $request->input('meta_description_ru');
+
         Service::create($data);
 
         return redirect()->route('pages.service.index')
@@ -112,6 +127,12 @@ class ServiceController extends Controller
             'bottom_image_alt_az' => 'nullable|string|max:255',
             'bottom_image_alt_en' => 'nullable|string|max:255',
             'bottom_image_alt_ru' => 'nullable|string|max:255',
+            'meta_title_az' => 'nullable|string|max:255',
+            'meta_title_en' => 'nullable|string|max:255',
+            'meta_title_ru' => 'nullable|string|max:255',
+            'meta_description_az' => 'nullable|string',
+            'meta_description_en' => 'nullable|string',
+            'meta_description_ru' => 'nullable|string',
         ]);
 
         $data = $request->all();
@@ -163,6 +184,14 @@ class ServiceController extends Controller
                 $data['bottom_image'] = 'uploads/services/' . $webpFileName;
             }
         }
+
+        // Yeni meta alanlarını güncelle
+        $data['meta_title_az'] = $request->input('meta_title_az');
+        $data['meta_title_en'] = $request->input('meta_title_en');
+        $data['meta_title_ru'] = $request->input('meta_title_ru');
+        $data['meta_description_az'] = $request->input('meta_description_az');
+        $data['meta_description_en'] = $request->input('meta_description_en');
+        $data['meta_description_ru'] = $request->input('meta_description_ru');
 
         $service->update($data);
 

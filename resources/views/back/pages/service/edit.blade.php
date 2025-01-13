@@ -68,6 +68,14 @@
                                             <div class="text-danger">{{ $message }}</div>
                                             @enderror
                                         </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Meta Başlıq (AZ)</label>
+                                            <input type="text" name="meta_title_az" class="form-control" value="{{ old('meta_title_az', $service->meta_title_az) }}">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Meta Təsvir (AZ)</label>
+                                            <textarea name="meta_description_az" class="form-control">{{ old('meta_description_az', $service->meta_description_az) }}</textarea>
+                                        </div>
                                     </div>
 
                                     <!-- En tab -->
@@ -86,6 +94,14 @@
                                             <div class="text-danger">{{ $message }}</div>
                                             @enderror
                                         </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Meta Title (EN)</label>
+                                            <input type="text" name="meta_title_en" class="form-control" value="{{ old('meta_title_en', $service->meta_title_en) }}">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Meta Description (EN)</label>
+                                            <textarea name="meta_description_en" class="form-control">{{ old('meta_description_en', $service->meta_description_en) }}</textarea>
+                                        </div>
                                     </div>
 
                                     <!-- Ru tab -->
@@ -103,6 +119,14 @@
                                             @error('description_ru')
                                             <div class="text-danger">{{ $message }}</div>
                                             @enderror
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Meta Заголовок (RU)</label>
+                                            <input type="text" name="meta_title_ru" class="form-control" value="{{ old('meta_title_ru', $service->meta_title_ru) }}">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Meta Текст (RU)</label>
+                                            <textarea name="meta_description_ru" class="form-control">{{ old('meta_description_ru', $service->meta_description_ru) }}</textarea>
                                         </div>
                                     </div>
                                 </div>

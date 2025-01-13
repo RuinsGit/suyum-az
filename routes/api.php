@@ -16,6 +16,7 @@ use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\TranslationManageController;
 use App\Http\Controllers\Api\ProductApplicationController;
 use App\Http\Controllers\Api\SeoController;
+use App\Http\Controllers\Api\LogoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -87,6 +88,11 @@ Route::prefix('/')->group(function () {
     Route::get('seo', [SeoController::class, 'index']);
     Route::get('seo/{key}', [SeoController::class, 'show']);
 
+});
+
+Route::prefix('v1')->group(function () {
+    Route::get('logo', [LogoController::class, 'index']);
+    Route::post('logo', [LogoController::class, 'store']);
 });
 
 // Contact Routes

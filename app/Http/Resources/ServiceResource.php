@@ -18,6 +18,8 @@ class ServiceResource extends JsonResource
             'bottom_image' => $this->bottom_image ? asset($this->bottom_image) : null,
             'bottom_image_alt' => $this->bottom_image_alt,
             'status' => (bool)$this->status,
+            'meta_title' => $this->meta_title,
+            'meta_description' => $this->meta_description,
             
            
         ];

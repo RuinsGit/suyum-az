@@ -149,17 +149,24 @@
                     </a>
                 </li>
 
-                <li>
+                <!-- <li>
                     <a href="{{ route('pages.translations.index') }}" class="waves-effect">
                         <i class="ri-translate"></i>
                         <span>Tərcümələr</span>
+                    </a>
+                </li> -->
+
+                <li>
+                    <a href="{{ route('pages.logo.index') }}" class="waves-effect">
+                        <i class="mdi mdi-image"></i>
+                        <span>Logo</span>
                     </a>
                 </li>
 
                 <li>
                     <a href="{{ route('pages.translation-manage.index') }}" class="waves-effect">
                         <i class="ri-translate"></i>
-                        <span>Tərcümələr İdarəetmə</span>
+                        <span>Tərcümələr </span>
                     </a>
                 </li>
 

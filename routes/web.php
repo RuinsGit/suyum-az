@@ -18,6 +18,7 @@ use App\Http\Controllers\Admin\SocialMediaController;
 use App\Http\Controllers\Admin\TranslationManageController;
 use App\Http\Controllers\Admin\ProductApplicationController;
 use App\Http\Controllers\Admin\SeoController;
+use App\Http\Controllers\Admin\LogoController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -116,6 +117,9 @@ Route::prefix('admin')->group(function () {
                 ->name('product-applications.toggle-status');
             Route::resource('seo', SeoController::class);
             Route::post('seo/{seo}/toggle-status', [SeoController::class, 'toggleStatus'])->name('seo.toggle-status');
+            Route::get('logo', [LogoController::class, 'index'])->name('logo.index');
+            Route::post('logo', [LogoController::class, 'store'])->name('logo.store');
+            Route::post('logo/{logo}/toggle-status', [LogoController::class, 'toggleStatus'])->name('logo.toggle-status');
         });
     });
 });

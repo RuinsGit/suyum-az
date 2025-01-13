@@ -187,6 +187,15 @@
                                                     @enderror
                                                 </div>
                                             </div>
+
+                                            <div class="mb-3">
+                                                <label class="form-label">Meta Başlıq (AZ)</label>
+                                                <input type="text" name="meta_title_az" class="form-control" value="{{ old('meta_title_az', $project->meta_title_az) }}">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Meta Təsvir (AZ)</label>
+                                                <textarea name="meta_description_az" class="form-control">{{ old('meta_description_az', $project->meta_description_az) }}</textarea>
+                                            </div>
                                         </div>
                                     </div>
 
@@ -235,6 +244,15 @@
                                                     @enderror
                                                 </div>
                                             </div>
+
+                                            <div class="mb-3">
+                                                <label class="form-label">Meta Title (EN)</label>
+                                                <input type="text" name="meta_title_en" class="form-control" value="{{ old('meta_title_en', $project->meta_title_en) }}">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Meta Description (EN)</label>
+                                                <textarea name="meta_description_en" class="form-control">{{ old('meta_description_en', $project->meta_description_en) }}</textarea>
+                                            </div>
                                         </div>
                                     </div>
 
@@ -282,6 +300,15 @@
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
                                                 </div>
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label class="form-label">Meta Заголовок (RU)</label>
+                                                <input type="text" name="meta_title_ru" class="form-control" value="{{ old('meta_title_ru', $project->meta_title_ru) }}">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Meta Текст (RU)</label>
+                                                <textarea name="meta_description_ru" class="form-control">{{ old('meta_description_ru', $project->meta_description_ru) }}</textarea>
                                             </div>
                                         </div>
                                     </div>

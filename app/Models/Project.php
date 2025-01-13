@@ -32,7 +32,13 @@ class Project extends Model
         'status',
         'image_alt_az',
         'image_alt_en',
-        'image_alt_ru'
+        'image_alt_ru',
+        'meta_title_az',
+        'meta_title_en',
+        'meta_title_ru',
+        'meta_description_az',
+        'meta_description_en',
+        'meta_description_ru',
     ];
 
     protected $casts = [
@@ -64,6 +70,16 @@ class Project extends Model
     public function getDescription2Attribute()
     {
         return $this->{'description2_' . app()->getLocale()};
+    }
+
+    public function getMetaTitleAttribute()
+    {
+        return $this->{'meta_title_' . app()->getLocale()};
+    }
+
+    public function getMetaDescriptionAttribute()
+    {
+        return $this->{'meta_description_' . app()->getLocale()};
     }
 
     public function getImageAltAttribute()

@@ -21,7 +21,10 @@ class ProjectResource extends JsonResource
             'bottom_images' => $this->bottom_images ? array_map(fn($img) => asset($img), $this->bottom_images) : [],
             'bottom_images_alt' => $this->bottom_images_alt,
             'status' => (bool)$this->status,
+            'meta_title' => $this->meta_title,
+            'meta_description' => $this->meta_description,
            
+
         ];
     }
 }

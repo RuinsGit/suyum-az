@@ -19,6 +19,7 @@ use App\Http\Controllers\Admin\TranslationManageController;
 use App\Http\Controllers\Admin\ProductApplicationController;
 use App\Http\Controllers\Admin\SeoController;
 use App\Http\Controllers\Admin\LogoController;
+use Illuminate\Support\Facades\Auth;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -36,7 +37,10 @@ Route::get('/', function () {
 
 Route::prefix('admin')->group(function () {
     Route::get('/', function () {
-        return redirect()->route('admin.login');
+        if (!Auth::guard('admin')->check()) {
+            return redirect()->route('admin.login');
+        }
+        return redirect()->route('admin.dashboard');
     });
 
     Route::get('login', [AdminController::class, 'showLoginForm'])->name('admin.login')->middleware('guest:admin');

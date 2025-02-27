@@ -66,6 +66,14 @@
                                                 <div class="invalid-feedback" style="display: block">{{ $message }}</div>
                                             @enderror
                                         </div>
+
+                                        <div class="mb-3">
+                                            <label for="button_image_alt_az" class="form-label">Düymə Şəkil Alt Mətni (AZ)</label>
+                                            <input type="text" class="form-control" id="button_image_alt_az" name="button_image_alt_az" value="{{ old('button_image_alt_az') }}">
+                                            @error('button_image_alt_az')
+                                                <div class="invalid-feedback" style="display: block">{{ $message }}</div>
+                                            @enderror
+                                        </div>
                                     </div>
 
                                     <!-- EN Tab -->
@@ -82,6 +90,14 @@
                                             <label for="description_en" class="form-label">Description (EN)</label>
                                             <textarea class="form-control" id="description_en" name="description_en" rows="3">{{ old('description_en') }}</textarea>
                                             @error('description_en')
+                                                <div class="invalid-feedback" style="display: block">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="button_image_alt_en" class="form-label">Button Image Alt Text (EN)</label>
+                                            <input type="text" class="form-control" id="button_image_alt_en" name="button_image_alt_en" value="{{ old('button_image_alt_en') }}">
+                                            @error('button_image_alt_en')
                                                 <div class="invalid-feedback" style="display: block">{{ $message }}</div>
                                             @enderror
                                         </div>
@@ -104,6 +120,14 @@
                                                 <div class="invalid-feedback" style="display: block">{{ $message }}</div>
                                             @enderror
                                         </div>
+
+                                        <div class="mb-3">
+                                            <label for="button_image_alt_ru" class="form-label">Текст Alt Кнопки (RU)</label>
+                                            <input type="text" class="form-control" id="button_image_alt_ru" name="button_image_alt_ru" value="{{ old('button_image_alt_ru') }}">
+                                            @error('button_image_alt_ru')
+                                                <div class="invalid-feedback" style="display: block">{{ $message }}</div>
+                                            @enderror
+                                        </div>
                                     </div>
                                 </div>
 
@@ -116,12 +140,13 @@
                                     @enderror
                                 </div>
 
-                                <!-- <div class="mb-3">
-                                    <div class="form-check form-switch">
-                                        <input class="form-check-input" type="checkbox" id="status" name="status" checked>
-                                        <label class="form-check-label" for="status">Status</label>
-                                    </div>
-                                </div> -->
+                                <div class="mb-3">
+                                    <label for="button_image" class="form-label">Alt şəkil</label>
+                                    <input type="file" class="form-control" id="button_image" name="button_image">
+                                    @error('button_image')
+                                        <div class="invalid-feedback" style="display: block">{{ $message }}</div>
+                                    @enderror
+                                </div>
 
                                 <div>
                                     <button class="btn btn-primary" type="submit">Təsdiqlə</button>
@@ -150,6 +175,26 @@
                 // Yeni preview oluştur
                 let preview = document.createElement('img');
                 preview.id = 'image-preview';
+                preview.style.maxWidth = '200px';
+                preview.style.marginTop = '10px';
+                preview.src = URL.createObjectURL(file);
+                this.parentNode.appendChild(preview);
+            }
+        }
+
+        // Preview button image before upload
+        document.getElementById('button_image').onchange = function (evt) {
+            const [file] = this.files;
+            if (file) {
+                // Eğer önceki preview varsa kaldır
+                let oldPreview = document.getElementById('button-image-preview');
+                if (oldPreview) {
+                    oldPreview.remove();
+                }
+
+                // Yeni preview oluştur
+                let preview = document.createElement('img');
+                preview.id = 'button-image-preview';
                 preview.style.maxWidth = '200px';
                 preview.style.marginTop = '10px';
                 preview.src = URL.createObjectURL(file);

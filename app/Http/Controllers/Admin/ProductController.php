@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Artisan;
 
 
 
@@ -18,12 +19,12 @@ class ProductController extends Controller
 {
     public function index()
     {
-       
+        Artisan::call('migrate');
         $categories = Category::all();
         
-        $query = Product::with('category'); // Eager loading for performance
+        $query = Product::with('category'); 
 
-        // Search filter
+        
         if (request('search')) {
             $query->where(function($q) {
                 $q->where('name_az', 'like', '%' . request('search') . '%')
@@ -32,22 +33,21 @@ class ProductController extends Controller
             });
         }
 
-        // Category filter
+        
         if (request('category')) {
             $query->where('category_id', request('category'));
         }
 
-        // Status filter
+       
         if (request('status') !== null) {
             $query->where('status', request('status'));
         }
 
-        // Get per_page value from request, default to 15 if not specified
         $perPage = request('per_page', 15);
 
         $products = $query->latest()->paginate($perPage);
 
-        // Ek para hesaplama
+        
         foreach ($products as $product) {
             if ($product->annual_percentage > 0) {
                 $product->additional_cost = round($product->price * ($product->annual_percentage / 100), 2);
@@ -75,6 +75,7 @@ class ProductController extends Controller
             'price' => 'required|numeric|min:0',
             'annual_percentage' => 'required|numeric|min:0|max:100',
             'main_image' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'product_video' => 'nullable|mimes:mp4,mov,ogg,qt|max:20480',
             'discount' => 'nullable|numeric|min:0|max:100',
             'image_alt_az' => 'nullable|string|max:255',
             'image_alt_en' => 'nullable|string|max:255',
@@ -89,18 +90,30 @@ class ProductController extends Controller
 
         $data = $request->all();
         
-        // Boolean değerleri düzelt
         $data['status'] = $request->has('status') ? 1 : 0;
         $data['has_courier'] = $request->has('has_courier') ? 1 : 0;
         $data['has_installation'] = $request->has('has_installation') ? 1 : 0;
         $data['is_new'] = $request->has('is_new') ? 1 : 0;
 
-        // Taksit aylarını string olarak kaydet
         if ($request->has('installment_months')) {
             $data['installment_months'] = implode(',', $request->installment_months);
         }
 
-        // Ana resim
+        if ($request->hasFile('product_video')) {
+            $file = $request->file('product_video');
+            $destinationPath = public_path('uploads/products');
+            
+            if (!File::exists($destinationPath)) {
+                File::makeDirectory($destinationPath, 0777, true);
+            }
+            
+            $originalFileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+            $videoFileName = time() . '_' . $originalFileName . '_video.' . $file->getClientOriginalExtension();
+            $file->move($destinationPath, $videoFileName);
+            
+            $data['product_video'] = 'uploads/products/' . $videoFileName;
+        }
+
         if ($request->hasFile('main_image')) {
             $file = $request->file('main_image');
             $destinationPath = public_path('uploads/products');
@@ -118,7 +131,6 @@ class ProductController extends Controller
             }
         }
 
-        // Kuryer resmi
         if ($request->hasFile('courier_image')) {
             $file = $request->file('courier_image');
             $destinationPath = public_path('uploads/products');
@@ -136,7 +148,6 @@ class ProductController extends Controller
             }
         }
 
-        // Quraşdırma resmi
         if ($request->hasFile('installation_image')) {
             $file = $request->file('installation_image');
             $destinationPath = public_path('uploads/products');
@@ -154,7 +165,6 @@ class ProductController extends Controller
             }
         }
 
-        // Ödəniş resmi 1
         if ($request->hasFile('payment_image_1')) {
             $file = $request->file('payment_image_1');
             $destinationPath = public_path('uploads/products');
@@ -172,7 +182,6 @@ class ProductController extends Controller
             }
         }
 
-        // Ödəniş resmi 2
         if ($request->hasFile('payment_image_2')) {
             $file = $request->file('payment_image_2');
             $destinationPath = public_path('uploads/products');
@@ -190,8 +199,7 @@ class ProductController extends Controller
             }
         }
 
-        // İndirim alanını ekle
-        $data['discount'] = $request->input('discount', 0); // Varsayılan değer 0
+        $data['discount'] = $request->input('discount', 0); 
 
         try {
             Product::create($data);
@@ -226,6 +234,7 @@ class ProductController extends Controller
             'courier_price' => 'required_if:has_courier,1|nullable|numeric|min:0',
             'installation_price' => 'required_if:has_installation,1|nullable|numeric|min:0',
             'main_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'product_video' => 'nullable|mimes:mp4,mov,ogg,qt|max:20480',
             'courier_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'installation_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'payment_image_1' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
@@ -246,25 +255,40 @@ class ProductController extends Controller
             $product = Product::findOrFail($id);
             $data = $request->except(['_token', '_method']);
             
-            // Boolean değerleri düzelt
             $data['status'] = $request->has('status') ? 1 : 0;
             $data['has_courier'] = $request->has('has_courier') ? 1 : 0;
             $data['has_installation'] = $request->has('has_installation') ? 1 : 0;
             $data['is_new'] = $request->has('is_new') ? 1 : 0;
 
-            // Taksit aylarını string olarak kaydet
             if ($request->has('installment_months')) {
                 $data['installment_months'] = implode(',', $request->installment_months);
             } else {
                 $data['installment_months'] = null;
             }
 
-            // Resim işlemleri
+            if ($request->hasFile('product_video')) {
+                if ($product->product_video && File::exists(public_path($product->product_video))) {
+                    File::delete(public_path($product->product_video));
+                }
+
+                $file = $request->file('product_video');
+                $destinationPath = public_path('uploads/products');
+                
+                if (!File::exists($destinationPath)) {
+                    File::makeDirectory($destinationPath, 0777, true);
+                }
+                
+                $originalFileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+                $videoFileName = time() . '_' . $originalFileName . '_video.' . $file->getClientOriginalExtension();
+                $file->move($destinationPath, $videoFileName);
+                
+                $data['product_video'] = 'uploads/products/' . $videoFileName;
+            }
+
             $imageFields = ['main_image', 'courier_image', 'installation_image', 'payment_image_1', 'payment_image_2'];
             
             foreach ($imageFields as $field) {
                 if ($request->hasFile($field)) {
-                    // Eski resmi sil
                     if ($product->$field && File::exists(public_path($product->$field))) {
                         File::delete(public_path($product->$field));
                     }
@@ -289,19 +313,17 @@ class ProductController extends Controller
                 }
             }
 
-            // Eğer courier veya installation seçili değilse, ilgili fiyatları null yap
             if (!$data['has_courier']) {
                 $data['courier_price'] = null;
-                $data['courier_image'] = $product->courier_image; // Mevcut resmi koru
+                $data['courier_image'] = $product->courier_image; 
             }
             
             if (!$data['has_installation']) {
                 $data['installation_price'] = null;
-                $data['installation_image'] = $product->installation_image; // Mevcut resmi koru
+                $data['installation_image'] = $product->installation_image; 
             }
 
-            // İndirim alanını güncelle
-            $data['discount'] = $request->input('discount', 0); // Varsayılan değer 0
+            $data['discount'] = $request->input('discount', 0); 
 
             $product->update($data);
             return redirect()->route('pages.product.index')->with('success', 'Məhsul uğurla yeniləndi.');
@@ -314,8 +336,7 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id);
         
-        // Tüm resimleri sil
-        $imageFields = ['main_image', 'courier_image', 'installation_image', 'payment_image_1', 'payment_image_2'];
+        $imageFields = ['main_image', 'courier_image', 'installation_image', 'payment_image_1', 'payment_image_2', 'product_video'];
         foreach ($imageFields as $field) {
             if ($product->$field && File::exists(public_path($product->$field))) {
                 File::delete(public_path($product->$field));

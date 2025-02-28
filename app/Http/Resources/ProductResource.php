@@ -41,6 +41,7 @@ class ProductResource extends JsonResource
             'installation_image' => $this->installation_image ? asset($this->installation_image) : null,
             'payment_image_1' => $this->payment_image_1 ? asset($this->payment_image_1) : null,
             'payment_image_2' => $this->payment_image_2 ? asset($this->payment_image_2) : null,
+            'product_video' => $this->product_video ? asset($this->product_video) : null,
             'status' => (bool)$this->status,
             'discount' => number_format((float)$this->discount, 2, '.', ''),
             'category' => new CategoryResource($this->category),

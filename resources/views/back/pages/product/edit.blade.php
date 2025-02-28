@@ -75,7 +75,7 @@
                                                             <div class="image-card">
                                                                 <div class="image-card-header">
                                                                     <span class="badge bg-primary">Əsas şəkil</span>
-                                                                    <!-- <button type="button" class="delete-image-btn" data-image="main_image"> -->
+                                                                   
                                                                         <i class="fas fa-times rui"></i>
                                                                     </button>
                                                                 </div>
@@ -85,6 +85,26 @@
                                                             </div>
                                                         </div>
                                                     @endif
+
+                                                    @if($product->product_video)
+                                                    <div class="col-md-3 mb-3 ruins">
+                                                        <div class="video-card">
+                                                            <div class="video-card-header">
+                                                                <span class="badge bg-primary">Məhsul videosu</span>
+                                                                <!-- <button type="button" class="close-btn"> -->
+                                                                    <i class="fas fa-times rui"></i>
+                                                                </button>
+                                                            </div>
+                                                            <div class="video-wrapper">
+                                                                <video class="img-fluid" controls>
+                                                                    <source src="{{ asset($product->product_video) }}" type="video/mp4">
+                                                                    Your browser does not support the video tag.
+                                                                </video>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    @endif
+
 
                                                     @if($product->courier_image)
                                                         <div class="col-md-3 mb-3 ruins">
@@ -498,6 +518,14 @@
                                     <div class="col-md-4 mb-3">
                                         <label class="form-label">Ödəniş şəkli 2</label>
                                         <input type="file" name="payment_image_2" class="form-control">
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">Məhsul videosu</label>
+                                        <input type="file" name="product_video" class="form-control @error('product_video') is-invalid @enderror">
+                                        <small class="text-muted">Dəstəklənən formatlar: mp4, mov, ogg, qt (maks. 20MB)</small>
+                                        @error('product_video')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
 

@@ -42,6 +42,7 @@ class Product extends Model
         'installation_image',
         'payment_image_1',
         'payment_image_2',
+        'product_video',
         'status',
         'description_az',
         'description_en',
